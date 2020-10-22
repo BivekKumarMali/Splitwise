@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Splitwise.DomainModel", "Sp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Splitwise.Core", "Splitwise.Core\Splitwise.Core.csproj", "{1F358A37-830A-456F-8650-E8074C4A8D49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spiltwsie.Repository", "Spiltwsie.Repository\Spiltwsie.Repository.csproj", "{83281076-8973-4C46-9C77-73129439B74C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spiltwise.Repository", "Spiltwsie.Repository\Spiltwise.Repository.csproj", "{83281076-8973-4C46-9C77-73129439B74C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
