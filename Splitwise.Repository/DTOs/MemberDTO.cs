@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Spiltwise.Repository.DTOs
+namespace Splitwise.Repository.DTOs
 {
-    class FriendDTO
+    public class MemberDTO
     {
         public long Id { get; set; }
         public string Name { get; set; }

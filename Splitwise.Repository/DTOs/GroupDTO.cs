@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Spiltwise.Repository.DTOs
+namespace Splitwise.Repository.DTOs
 {
-    class GroupDTO
+    public class GroupDTO
     {
         public long Id { get; set; }
 

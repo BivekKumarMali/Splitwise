@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Splitwise.DomainModel\Splitwise.DomainModel.csproj" />
+    <ProjectReference Include="..\Splitwise.Repository\Splitwise.Repository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Spiltwise.Repository.DTOs
+namespace Splitwise.Repository.DTOs
 {
-    class ExpenseDTO
-    {
+    public class ExpenseDetailDTO
+    {/*
         public long Id { get; set; }
         public string ExpenseName { get; set; }
-        public string[] PayeeName { get; set; }
+        public DataTime TimeStamp { get; set; }
         public long AmountPaid { get; set; }
         public long AmountOwed { get; set; }
-    }
+    */}
 }

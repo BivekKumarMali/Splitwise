@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Splitwise.DomainModel.Models;
+using Splitwise.Repository;
+using Splitwise.Repository.DTOs;
 
 namespace Splitwise.Core.ApiControllers
 {
@@ -13,88 +15,108 @@ namespace Splitwise.Core.ApiControllers
     public class UsersController : ControllerBase
     {
         #region Constructors
-        public UsersController()
+        public UsersController(
+            IUserRepository userRepository, 
+            IFriendRepository<FriendDTO> friendRepository
+            )
         {
-
+            _userRepository = userRepository;
+            _friendRepository = friendRepository;
         }
         #endregion
 
         #region Private variables
+
+        private readonly IUserRepository _userRepository;
+        private readonly IFriendRepository<FriendDTO> _friendRepository;
+
         #endregion
 
         #region Public methods
 
-        [HttpGet]
-        [Route("Login")]
-        public virtual IActionResult Login(User user)
-        {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-
-
-            throw new NotImplementedException();
-        }
-
+        // PUT: api/Users
         [HttpPut]
         public virtual IActionResult Edit(User user)
         {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
+            if (user != null)
+            {
+                _userRepository.UpdateUser(user);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
 
-
-            throw new NotImplementedException();
         }
 
+        // POST: api/Users
         [HttpPost]
         public virtual IActionResult Register(User user)
         {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
+            if (user != null)
+            {
+                _userRepository.AddUser(user);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
 
-
-            throw new NotImplementedException();
         }
 
+        // GET: api/Users/Login
+        [HttpGet]
+        [Route("Login")]
+        public IActionResult Login(User user)
+        {
+            if (_userRepository.LogIn(user))
+            {
+                return Ok(_userRepository.LoginCredentials());
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
-
+        // POST: api/Users/Friends
         [HttpPost]
         [Route("Friends")]
-        public virtual IActionResult AddFriend(Friend friends)
+        public virtual IActionResult AddFriend(long userid)
         {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-
-            throw new NotImplementedException();
+            if (_userRepository.UserExist(userid))
+            {
+                _friendRepository.AddFriend();
+                return Ok();
+            }
+            return NotFound();
         }
 
+        // DELETE: api/Users/Friends
         [HttpDelete]
         [Route("Friends")]
-        public virtual IActionResult RemoveFriend(Friend friends)
+        public virtual IActionResult RemoveFriend(long userid)
         {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-
-
-            throw new NotImplementedException();
+            if (_userRepository.UserExist(userid))
+            {
+                _friendRepository.RemoveFriend();
+                return Ok();
+            }
+            return NotFound();
         }
 
+        // GET: api/Users/Friends
         [HttpGet]
         [Route("Friends")]
-        public virtual IActionResult GetFriends(string userid)
+        public IActionResult GetFriends(long userid)
         {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-
-
-            throw new NotImplementedException();
-        }
-
-        [HttpGet]
-        [Route("RecentActivity/{userid}")]
-        public virtual IActionResult GetRecentActivity(string userid)
-        {
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
+            if (_userRepository.UserExist(userid))
+            {
+                return Ok( _friendRepository.AllFriends());
+            }
+            return NotFound();
 
 
             throw new NotImplementedException();
