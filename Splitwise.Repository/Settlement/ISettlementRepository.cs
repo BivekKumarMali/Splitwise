@@ -11,7 +11,7 @@ namespace Splitwise.Repository
         IEnumerable<T> SettlementByGroupId(int groupid);
         void AddSettlement(Settlement settlement);
         void DeleteSettlement(long id);
-        object SettlementByUserId(long userid);
+        object SettlementByUserId(string userid);
         bool SettlementExists(long id);
     }
 }

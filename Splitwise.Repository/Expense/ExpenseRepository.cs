@@ -28,7 +28,7 @@ namespace Splitwise.Repository
             throw new NotImplementedException();
         }
 
-        public object ExpenseByUserID(long userid)
+        public IEnumerable<ExpenseDTO> ExpenseByUserID(string userid)
         {
             throw new NotImplementedException();
         }

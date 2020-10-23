@@ -9,7 +9,7 @@ namespace Splitwise.DomainModel.Models
     public class Member
     {
         [ForeignKey("User")]
-        public long UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("Group")]
         public long GroupId { get; set; }

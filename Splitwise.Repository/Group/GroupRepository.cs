@@ -7,7 +7,7 @@ namespace Splitwise.Repository.Group
 {
     class GroupRepository : IGroupRepository<GroupDTO>
     {
-        public IEnumerable<GroupDTO> AllGroups(long userId)
+        public IEnumerable<GroupDTO> AllGroups(string userId)
         {
             throw new NotImplementedException();
         }

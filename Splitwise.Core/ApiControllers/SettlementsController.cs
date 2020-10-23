@@ -77,7 +77,7 @@ namespace Splitwise.Core.ApiControllers
         //GET : api/Setlement/{userid}
         [Route("{userid}")]
         [HttpGet]
-        public IActionResult GetByUserID(long userid)
+        public IActionResult GetByUserID(string userid)
         {
             if (_userRepository.UserExist(userid))
             {

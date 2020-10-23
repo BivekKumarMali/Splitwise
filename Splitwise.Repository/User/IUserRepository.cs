@@ -8,10 +8,10 @@ namespace Splitwise.Repository
 {
     public interface IUserRepository
     {
-        bool UserExist(long userid);
-        void AddUser(User user);
-        void UpdateUser(User user);
+        bool UserExist(string userid);
+        bool AddApplicationUser(ApplicationUser user);
+        void UpdateUser(ApplicationUser user);
         object LoginCredentials();
-        bool LogIn(User user);
+        bool LogIn(ApplicationUser user);
     }
 }

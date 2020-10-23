@@ -6,29 +6,24 @@ using System.Text;
 
 namespace Splitwise.Repository
 {
-    public class SettlementRepository : ISettlementRepository<SettlementDTO>
+    public class ExpenseDetailRepository : IExpenseDetailRepository<ExpenseDetailDTO>
     {
-        public void AddSettlement(Settlement settlement)
+        public void AddExpenseDetail(ExpenseDetail[] expenseDetails)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteSettlement(long id)
+        public void EditExpenseDetail(ExpenseDetail[] expenseDetails)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SettlementDTO> SettlementByGroupId(int groupid)
+        public IEnumerable<ExpenseDetailDTO> ExpenseDetailByExpenseID(long expenseid)
         {
             throw new NotImplementedException();
         }
 
-        public object SettlementByUserId(string userid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool SettlementExists(long id)
+        public ExpenseDetail[] JsonToExpenseDetails(string jsonExpenseDetail)
         {
             throw new NotImplementedException();
         }

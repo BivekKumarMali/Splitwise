@@ -12,7 +12,7 @@ namespace Splitwise.Repository
         void AddExpense(Expense expense);
         void EditExpense(Expense expense);
         void Delete(long expenseId);
-        object ExpenseByUserID(long userid);
+        IEnumerable<T> ExpenseByUserID(string userid);
         bool ExpenseExist(long expenseId);
     }
 }

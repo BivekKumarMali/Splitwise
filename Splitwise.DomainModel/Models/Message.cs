@@ -17,7 +17,7 @@ namespace Splitwise.DomainModel.Models
         public string TimeStamp { get; set; }
 
         [ForeignKey("User")]
-        public long UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("Expense")]
         public long ExpenseId { get; set; }

@@ -1,16 +1,12 @@
 ﻿using Splitwise.DomainModel.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Splitwise.Data
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext: IdentityDbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<ExpenseDetail> ExpenseDetails { get; set; }
@@ -19,7 +15,7 @@ namespace Splitwise.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

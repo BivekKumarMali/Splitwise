@@ -36,7 +36,7 @@ namespace Splitwise.Core.ApiControllers
 
         // PUT: api/Users
         [HttpPut]
-        public virtual IActionResult Edit(User user)
+        public virtual IActionResult Edit(ApplicationUser user)
         {
             if (user != null)
             {
@@ -52,11 +52,11 @@ namespace Splitwise.Core.ApiControllers
 
         // POST: api/Users
         [HttpPost]
-        public virtual IActionResult Register(User user)
+        public virtual IActionResult Register(ApplicationUser user)
         {
             if (user != null)
             {
-                _userRepository.AddUser(user);
+                _userRepository.AddApplicationUser(user);
                 return Ok();
             }
             else
@@ -69,7 +69,7 @@ namespace Splitwise.Core.ApiControllers
         // GET: api/Users/Login
         [HttpGet]
         [Route("Login")]
-        public IActionResult Login(User user)
+        public IActionResult Login(ApplicationUser user)
         {
             if (_userRepository.LogIn(user))
             {
@@ -84,7 +84,7 @@ namespace Splitwise.Core.ApiControllers
         // POST: api/Users/Friends
         [HttpPost]
         [Route("Friends")]
-        public virtual IActionResult AddFriend(long userid)
+        public virtual IActionResult AddFriend(string userid)
         {
             if (_userRepository.UserExist(userid))
             {
@@ -97,7 +97,7 @@ namespace Splitwise.Core.ApiControllers
         // DELETE: api/Users/Friends
         [HttpDelete]
         [Route("Friends")]
-        public virtual IActionResult RemoveFriend(long userid)
+        public virtual IActionResult RemoveFriend(string userid)
         {
             if (_userRepository.UserExist(userid))
             {
@@ -110,7 +110,7 @@ namespace Splitwise.Core.ApiControllers
         // GET: api/Users/Friends
         [HttpGet]
         [Route("Friends")]
-        public IActionResult GetFriends(long userid)
+        public IActionResult GetFriends(string userid)
         {
             if (_userRepository.UserExist(userid))
             {
