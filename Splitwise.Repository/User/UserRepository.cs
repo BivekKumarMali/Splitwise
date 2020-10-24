@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Splitwise.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository: IUserRepository
     {
         #region Contructor
         public UserRepository(
@@ -17,12 +17,9 @@ namespace Splitwise.Repository
             )
         {
             _dbContext = dbContext;
-            _userManager = userManager;
+           _userManager = userManager;
         }
 
-        public UserRepository()
-        {
-        }
 
         #endregion
         #region Private Variable
@@ -33,11 +30,12 @@ namespace Splitwise.Repository
         #endregion
         #region Private method
 
-        private async Task<bool> AddUser(string email, string password)
+        private async Task<string> AddUser(string email, string password)
         {
             IdentityUser user = new IdentityUser { Email = email, UserName = email };
             var addUserManagerStatus = await _userManager.CreateAsync(user, password);
-            return addUserManagerStatus.Succeeded;
+            user = await _userManager.FindByEmailAsync(email);
+            return user.Id;
         }
 
         #endregion
@@ -45,10 +43,11 @@ namespace Splitwise.Repository
         #region Public method
         public bool AddApplicationUser(ApplicationUser user)
         {
+            var Task = AddUser(user.Email, user.Email);
+            Task.Wait();
+            user.UserId = Task.Result;
+            _dbContext.ApplicationUsers.Add(user);
             return true;
-            //var Task = AddUser(user.Email, user.Email);
-            //Task.Wait();
-            //return Task.Result;
         }
 
         public bool LogIn(ApplicationUser user)
