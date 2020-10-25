@@ -69,15 +69,17 @@ namespace Splitwise.Core.ApiControllers
         // GET: api/Users/Login
         [HttpGet]
         [Route("Login")]
-        public IActionResult Login(ApplicationUser user)
+        public IActionResult Login(ApplicationUser user, string password)
         {
-            if (_userRepository.LogIn(user))
+            var task = _userRepository.UserValidation(user);
+            task.Wait();
+            if (_userRepository.UserExist(user.UserId) && task.Result)
             {
-                return Ok(_userRepository.LoginCredentials());
+                return Ok(_userRepository.LoginCredentials(user));
             }
             else
             {
-                return BadRequest();
+                return Unauthorized();
             }
         }
 
