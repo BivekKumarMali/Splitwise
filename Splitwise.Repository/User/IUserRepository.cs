@@ -7,7 +7,7 @@ namespace Splitwise.Repository
     {
         bool UserExist(string userid);
         void AddApplicationUser(ApplicationUser user);
-        void UpdateUser(ApplicationUser user);
+        void UpdateApplicationUser(ApplicationUser user);
         object LoginCredentials(ApplicationUser user);
         Task<bool> UserValidation(ApplicationUser user, string password);
     }

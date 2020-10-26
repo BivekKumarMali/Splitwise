@@ -40,7 +40,7 @@ namespace Splitwise.Core.ApiControllers
         {
             if (user != null)
             {
-                _userRepository.UpdateUser(user);
+                _userRepository.UpdateApplicationUser(user);
                 return Ok();
             }
             else
@@ -71,7 +71,7 @@ namespace Splitwise.Core.ApiControllers
         [Route("Login")]
         public IActionResult Login(ApplicationUser user, string password)
         {
-            var task = _userRepository.UserValidation(user);
+            var task = _userRepository.UserValidation(user, password);
             task.Wait();
             if (_userRepository.UserExist(user.UserId) && task.Result)
             {

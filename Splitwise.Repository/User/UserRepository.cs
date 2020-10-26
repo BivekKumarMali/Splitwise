@@ -41,11 +41,18 @@ namespace Splitwise.Repository
         {
             var addUserManagerStatus = _userManager.CreateAsync(identityUser, password);
             addUserManagerStatus.Wait();
-            var check = addUserManagerStatus.Result;
+            var check = addUserManagerStatus.Result.Succeeded;
             var TaskUser = _userManager.FindByEmailAsync(identityUser.Email);
             TaskUser.Wait();
-            identityUser.Id = TaskUser.Result.Id;
-            return identityUser.Id;
+            return TaskUser.Result.Id;
+        }
+
+        private bool UpdateUser(ApplicationUser user) 
+        {
+            IdentityUser identityUser = new IdentityUser { Id = user.UserId, UserName = user.Email, Email = user.Email };
+            var updateUserManagerStatus = _userManager.UpdateAsync(identityUser);
+            updateUserManagerStatus.Wait();
+            return updateUserManagerStatus.Result.Succeeded;
         }
 
         private ApplicationUser GetUserByID(string userid) 
@@ -58,8 +65,8 @@ namespace Splitwise.Repository
         #region Public method
         public void AddApplicationUser(ApplicationUser user)
         {
-           // IdentityUser identityUser = new IdentityUser { Email = user.Email, UserName = user.Email };
-            //user.UserId = AddUser(identityUser, "POIqwery4@#$569#@$%");
+            IdentityUser identityUser = new IdentityUser { Email = user.Email, UserName = user.Email };
+            user.UserId = AddUser(identityUser, "123456");
             _dbContext.ApplicationUsers.Add(user);
             _dbContext.SaveChanges();
         }
@@ -93,10 +100,14 @@ namespace Splitwise.Repository
             });
         }
 
-        public void UpdateUser(ApplicationUser user)
+        public void UpdateApplicationUser(ApplicationUser user)
         {
+            var oldUserValue = GetUserByID(user.UserId);
+            if(oldUserValue.Email != user.Email)
+                UpdateUser(user);
             _dbContext.ApplicationUsers.Update(user);
             _dbContext.SaveChanges();
+
         }
 
         public bool UserExist(string userid)
