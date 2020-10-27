@@ -10,7 +10,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <ProjectReference Include="..\Splitwise.DomainModel\Splitwise.DomainModel.csproj" />
-    <ProjectReference Include="..\Splitwise.Core\Splitwise.Core.csproj"/>
+    <ProjectReference Include="..\Splitwise.Core\Splitwise.Core.csproj" />
+    <ProjectReference Include="..\Splitwise.Repository\Splitwise.Repository.csproj" />
   </ItemGroup>
 
 

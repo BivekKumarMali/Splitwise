@@ -86,11 +86,11 @@ namespace Splitwise.Core.ApiControllers
         // POST: api/Users/Friends
         [HttpPost]
         [Route("Friends")]
-        public virtual IActionResult AddFriend(string userid)
+        public virtual IActionResult AddFriend(string userid, string friendId)
         {
             if (_userRepository.UserExist(userid))
             {
-                _friendRepository.AddFriend();
+                _friendRepository.AddFriend(userid, friendId);
                 return Ok();
             }
             return NotFound();
@@ -99,11 +99,11 @@ namespace Splitwise.Core.ApiControllers
         // DELETE: api/Users/Friends
         [HttpDelete]
         [Route("Friends")]
-        public virtual IActionResult RemoveFriend(string userid)
+        public virtual IActionResult RemoveFriend(string userid, string friendId)
         {
             if (_userRepository.UserExist(userid))
             {
-                _friendRepository.RemoveFriend();
+                _friendRepository.RemoveFriend(userid, friendId);
                 return Ok();
             }
             return NotFound();
@@ -116,12 +116,10 @@ namespace Splitwise.Core.ApiControllers
         {
             if (_userRepository.UserExist(userid))
             {
-                return Ok( _friendRepository.AllFriends());
+                return Ok( _friendRepository.AllFriends(userid));
             }
             return NotFound();
 
-
-            throw new NotImplementedException();
         }
         #endregion
     }

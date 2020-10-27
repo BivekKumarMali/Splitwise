@@ -1,4 +1,5 @@
-﻿using Splitwise.Repository.DTOs;
+﻿using Splitwise.Data;
+using Splitwise.Repository.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +8,19 @@ namespace Splitwise.Repository
 {
     public class MemberRepository : IMemberRepository<MemberDTO>
     {
-        public void AddMember()
+        #region Contructor
+
+        public MemberRepository(AppDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+        #endregion
+        #region Private Varibles
+
+        private readonly AppDbContext _dbContext;
+        #endregion
+        #region Public Methods
+        public void AddMember() { 
         }
 
         public IEnumerable<MemberDTO> AllMember()
@@ -21,5 +32,6 @@ namespace Splitwise.Repository
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

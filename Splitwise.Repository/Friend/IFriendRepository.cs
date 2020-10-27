@@ -9,8 +9,8 @@ namespace Splitwise.Repository
 {
     public interface IFriendRepository<T>
     {
-        void AddFriend();
-        void RemoveFriend();
-       IEnumerable<FriendDTO> AllFriends();
+        void AddFriend(string userId, string friendId);
+        void RemoveFriend(string userId, string friendId);
+       IEnumerable<FriendDTO> AllFriends(string userId);
     }
 }

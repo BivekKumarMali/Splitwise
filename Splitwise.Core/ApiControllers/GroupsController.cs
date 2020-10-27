@@ -35,7 +35,7 @@ namespace Splitwise.Core.ApiControllers
         #region Public methods
 
         // GET: api/Groups
-        [HttpPost]
+        [HttpGet]
         public virtual IActionResult Groups(string userId)
         {
             if (_userRepository.UserExist(userId))

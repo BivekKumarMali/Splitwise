@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Splitwise.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Splitwise.Repository;
+using Splitwise.Repository.DTOs;
 
 namespace Splitwise.Web
 {
@@ -44,7 +46,9 @@ namespace Splitwise.Web
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+            RegisterDepencies(services);
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -65,5 +69,11 @@ namespace Splitwise.Web
                 endpoints.MapControllers();
             });
         }
+
+        private void RegisterDepencies(IServiceCollection services)
+        {
+            services.AddScoped<IGroupRepository<GroupDTO>, GroupRepository>();
+        }
+
     }
 }
