@@ -39,7 +39,20 @@ namespace Splitwise.Core.ApiControllers
         {
             if (_groupRepository.GroupExist(groupid))
             {
-                return Ok(_memberRepository.AllMember());
+                return Ok(_memberRepository.AllMember(groupid));
+            }
+            return NotFound();
+
+        }
+        
+        //GET : api/Members
+        [Route("Balance")]
+        [HttpGet]
+        public IActionResult GetWithBalance(int groupid)
+        {
+            if (_groupRepository.GroupExist(groupid))
+            {
+                return Ok(_memberRepository.AllMemberWithBalance(groupid));
             }
             return NotFound();
 
@@ -52,7 +65,7 @@ namespace Splitwise.Core.ApiControllers
         {
             if (member != null)
             {
-                _memberRepository.AddMember();
+                _memberRepository.AddMember(member);
                 return Ok();
             }
             return NotFound();
@@ -65,7 +78,7 @@ namespace Splitwise.Core.ApiControllers
         {
             if (member != null)
             {
-                _memberRepository.DeleteMember();
+                _memberRepository.DeleteMember(member);
                 return Ok();
             }
             return NotFound();

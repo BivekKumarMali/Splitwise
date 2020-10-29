@@ -6,7 +6,7 @@ namespace Splitwise.Repository.DTOs
 {
     public class MemberDTO
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public long Amount { get; set; }
     }

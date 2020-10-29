@@ -1,4 +1,5 @@
-﻿using Splitwise.Data;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using Splitwise.Data;
 using Splitwise.DomainModel.Models;
 using Splitwise.Repository.DTOs;
 using System;
@@ -50,21 +51,18 @@ namespace Splitwise.Repository
 
         public IEnumerable<ExpenseDTO> ExpenseByGroupId(Member member)
         {
-            var listOfExpense = _dbContext.Expenses.ToList().Where(x => x.GroupId == member.GroupId).OrderBy(x => x.TimeStamp);
+            var listOfExpense = _dbContext.Expenses.Where(x => x.GroupId == member.GroupId).OrderBy(x => x.TimeStamp).ToList();
             var listOfUser = _dbContext.ApplicationUsers.ToList();
-            return (from ed in _dbContext.ExpenseDetails
-                                  join e in listOfExpense
-                                  on ed.ExpenseId equals e.Id
-                                  where ed.UserId == member.UserId
-                                  select new ExpenseDTO
-                                  {
-                                      Id = e.Id,
-                                      AmountOwed = ed.AmountOwe - ed.AmountPaid,
-                                      ExpenseName = e.ExpenseName,
-                                      TimeStamp = e.TimeStamp.ToString()
-                                  }
-                                  );
-
+            return from e in listOfExpense
+                   join u in listOfUser
+                   on e.UserId equals u.UserId
+                   select new ExpenseDTO
+                   {
+                       Id = e.Id,
+                       ExpenseName = e.ExpenseName,
+                       UserName = u.Name,
+                       TimeStamp = e.TimeStamp.ToString()
+                   };
 
         }
 

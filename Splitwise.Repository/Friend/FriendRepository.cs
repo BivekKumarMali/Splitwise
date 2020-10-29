@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Splitwise.Repository
 {
-    class FriendRepository : IFriendRepository<FriendDTO>
+    public class FriendRepository : IFriendRepository<FriendDTO>
     {
 
         #region Contructor
@@ -59,32 +59,27 @@ namespace Splitwise.Repository
         public IEnumerable<FriendDTO> AllFriends(string userId)
         {
             List<string> listOfFriendUserId = new List<string>();
-            List<FriendDTO> friendDTOs = new List<FriendDTO>();
 
             var listOfFriends = _dbContext.Friends.Where
                 (x =>
                     x.FriendId == userId || x.UserId == userId
             ).ToList();
 
+            // Filter Outing my userId from lisOfFriends to get the list of my frineds userId
             foreach (var friend in listOfFriends)
             {
                 if (friend.UserId == userId) listOfFriendUserId.Add(friend.FriendId);
                 else listOfFriendUserId.Add(friend.UserId);
             }
 
-            var applicationUsers = _dbContext.ApplicationUsers.ToList();
-
-            return applicationUsers.Join
-                (
-                    listOfFriendUserId,
-                    u => u.UserId,
-                    f => f,
-                    (u, f) => new FriendDTO
-                    {
-                        Name = u.Name,
-                        Id = f
-                    }
-                    ).ToList();
+            return from u in _dbContext.ApplicationUsers
+                   join f in listOfFriendUserId
+                   on u.UserId equals f
+                   select new FriendDTO
+                   {
+                       Id = u.UserId,
+                       Name = u.Name
+                   };
         }
 
         #endregion

@@ -36,7 +36,7 @@ namespace Splitwise.Core.ApiControllers
 
         // PUT: api/Users
         [HttpPut]
-        public virtual IActionResult Edit(ApplicationUser user)
+        public virtual IActionResult Edit(UserDTO user)
         {
             if (user != null)
             {
@@ -52,7 +52,7 @@ namespace Splitwise.Core.ApiControllers
 
         // POST: api/Users
         [HttpPost]
-        public virtual IActionResult Register(ApplicationUser user)
+        public IActionResult Register(UserDTO user)
         {
             if (user != null)
             {

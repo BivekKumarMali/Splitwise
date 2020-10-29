@@ -77,11 +77,11 @@ namespace Splitwise.Core.ApiControllers
         //GET : api/Setlement/{userid}
         [Route("{userid}")]
         [HttpGet]
-        public IActionResult GetByUserID(string userid)
+        public IActionResult GetByUserID(Friend friend)
         {
-            if (_userRepository.UserExist(userid))
+            if (_userRepository.UserExist(friend.UserId) && _userRepository.UserExist(friend.FriendId))
             {
-                return Ok(_settlementRepository.SettlementByUserId(userid));
+                return Ok(_settlementRepository.SettlementByUserId(friend));
             }
             return NotFound();
 

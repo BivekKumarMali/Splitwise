@@ -42,11 +42,11 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         //GET : api/Expenses
         [HttpGet]
-        public IActionResult GetByGroupID(int groupid)
+        public IActionResult GetByGroupID(Member member)
         {
-            if (_groupRepository.GroupExist(groupid))
+            if (_groupRepository.GroupExist(member.GroupId))
             {
-                return Ok(_expenseRepository.ExpenseByGroupId(groupid));
+                return Ok(_expenseRepository.ExpenseByGroupId(member));
             }
             return NotFound();
 

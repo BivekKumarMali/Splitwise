@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Splitwise.Data;
 using Splitwise.DomainModel.Models;
+using Splitwise.Repository.DTOs;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,12 +20,14 @@ namespace Splitwise.Repository
         public UserRepository(
             AppDbContext dbContext,
             UserManager<IdentityUser> userManager,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IMapper mapper
             )
         {
             _dbContext = dbContext;
            _userManager = userManager;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
 
@@ -33,6 +37,7 @@ namespace Splitwise.Repository
         private readonly AppDbContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
         #endregion
         #region Private method
@@ -63,8 +68,9 @@ namespace Splitwise.Repository
         #endregion
 
         #region Public method
-        public void AddApplicationUser(ApplicationUser user)
+        public void AddApplicationUser(UserDTO newUser)
         {
+            ApplicationUser user = _mapper.Map<ApplicationUser>(newUser);
             IdentityUser identityUser = new IdentityUser { Email = user.Email, UserName = user.Email };
             user.UserId = AddUser(identityUser, "123456");
             _dbContext.ApplicationUsers.Add(user);
@@ -100,8 +106,9 @@ namespace Splitwise.Repository
             });
         }
 
-        public void UpdateApplicationUser(ApplicationUser user)
+        public void UpdateApplicationUser(UserDTO newUser)
         {
+            ApplicationUser user = _mapper.Map<ApplicationUser>(newUser);
             var oldUserValue = GetUserByID(user.UserId);
             if(oldUserValue.Email != user.Email)
                 UpdateUser(user);

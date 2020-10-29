@@ -12,6 +12,6 @@ namespace Splitwise.DomainModel.Models
         public string UserId { get; set; }
 
         [ForeignKey("Group")]
-        public long GroupId { get; set; }
+        public int GroupId { get; set; }
     }
 }

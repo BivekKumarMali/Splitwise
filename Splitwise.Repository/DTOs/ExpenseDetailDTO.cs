@@ -5,11 +5,10 @@ using System.Text;
 namespace Splitwise.Repository.DTOs
 {
     public class ExpenseDetailDTO
-    {/*
+    {
         public long Id { get; set; }
-        public string ExpenseName { get; set; }
-        public DataTime TimeStamp { get; set; }
+        public string UserName { get; set; }
         public long AmountPaid { get; set; }
         public long AmountOwed { get; set; }
-    */}
+    }
 }

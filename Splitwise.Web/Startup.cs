@@ -73,6 +73,11 @@ namespace Splitwise.Web
         private void RegisterDepencies(IServiceCollection services)
         {
             services.AddScoped<IGroupRepository<GroupDTO>, GroupRepository>();
+            services.AddScoped<IExpenseDetailRepository<ExpenseDetailDTO>, ExpenseDetailRepository>();
+            services.AddScoped<IExpenseRepository<ExpenseDTO>, ExpenseRepository>();
+            services.AddScoped<IFriendRepository<FriendDTO>, FriendRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISettlementRepository<SettlementDTO>, SettlementRepository>();
         }
 
     }
