@@ -16,10 +16,12 @@ namespace Splitwise.DomainModel.Models
 
         public string TimeStamp { get; set; }
 
-        [ForeignKey("User")]
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
 
-        [ForeignKey("Expense")]
         public long ExpenseId { get; set; }
+        [ForeignKey("ExpenseId")]
+        public Expense Expense { get; set; }
     }
 }

@@ -97,6 +97,7 @@ namespace Splitwise.Web
             services.AddScoped<IFriendRepository<FriendDTO>, FriendRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISettlementRepository<SettlementDTO>, SettlementRepository>();
+            services.AddScoped<IMemberRepository<MemberDTO>, MemberRepository>();
         }
 
     }

@@ -40,13 +40,14 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         #region Public methods
 
-        //GET : api/Expenses
-        [HttpGet]
-        public IActionResult GetByGroupID(Member member)
+        //GET : api/Expenses/1
+        [Route("ByGroupID/{groupId}")]
+        [HttpGet("{groupId}")]
+        public IActionResult GetByGroupID(int groupId)
         {
-            if (_groupRepository.GroupExist(member.GroupId))
+            if (_groupRepository.GroupExist(groupId))
             {
-                return Ok(_expenseRepository.ExpenseByGroupId(member));
+                return Ok(_expenseRepository.ExpenseByGroupId(groupId));
             }
             return NotFound();
 
@@ -89,8 +90,8 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         }
 
-        //GET : api/Expenses/userid
-        [Route("{userid}")]
+        /*GET : api/Expenses/userid
+        [Route("ByUserID/{userid}")]
         [HttpGet("{userid}")]
         public IActionResult GetByUserID(string userid)
         {
@@ -100,11 +101,11 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
             }
             return NotFound();
 
-        }
+        }*/
 
-        // GET : api/Expenses/ExpenseDetails
-        [Route("ExpenseDetails")]
-        [HttpGet]
+        // GET : api/Expenses/ExpenseDetails/1
+        [Route("ExpenseDetails/{expenseid}")]
+        [HttpGet("{expenseid}")]
         public IActionResult GetExpenseDetail(long expenseid)
         {
             if (_expenseRepository.ExpenseExist(expenseid))
@@ -118,9 +119,9 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         //POST : api/Expenses/ExpenseDetails
         [Route("ExpenseDetails")]
         [HttpPost]
-        public IActionResult AddDetails(string jsonExpenseDetail)
+        public IActionResult AddDetails(ExpenseDetail[] expenseDetails)
         {
-            ExpenseDetail[] expenseDetails = _expenseDetailRepository.JsonToExpenseDetails(jsonExpenseDetail);
+            //ExpenseDetail[] expenseDetails = _expenseDetailRepository.JsonToExpenseDetails(jsonExpenseDetail);
             if (_expenseRepository.ExpenseExist(expenseDetails[0].ExpenseId))
             {
                 _expenseDetailRepository.AddExpenseDetail(expenseDetails);

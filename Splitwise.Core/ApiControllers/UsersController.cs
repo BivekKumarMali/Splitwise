@@ -83,14 +83,30 @@ namespace Splitwise.Core.ApiControllers
             }
         }
 
+        // GET: api/Users/ByMail
+        [HttpGet("{mail}")]
+        [Route("ByMail/{mail}")]
+        public IActionResult ByMail(string mail)
+        {
+            var user = _userRepository.FindByMail(mail);
+            if (user != null)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         // POST: api/Users/Friends
         [HttpPost]
         [Route("Friends")]
-        public virtual IActionResult AddFriend(string userid, string friendId)
+        public virtual IActionResult AddFriend(Friend friend)
         {
-            if (_userRepository.UserExist(userid))
+            if (_userRepository.UserExist(friend.UserId))
             {
-                _friendRepository.AddFriend(userid, friendId);
+                _friendRepository.AddFriend(friend.UserId, friend.FriendId);
                 return Ok();
             }
             return NotFound();
@@ -99,11 +115,11 @@ namespace Splitwise.Core.ApiControllers
         // DELETE: api/Users/Friends
         [HttpDelete]
         [Route("Friends")]
-        public virtual IActionResult RemoveFriend(string userid, string friendId)
+        public IActionResult RemoveFriend(Friend friend)
         {
-            if (_userRepository.UserExist(userid))
+            if (_userRepository.UserExist(friend.UserId))
             {
-                _friendRepository.RemoveFriend(userid, friendId);
+                _friendRepository.RemoveFriend(friend.UserId, friend.FriendId);
                 return Ok();
             }
             return NotFound();

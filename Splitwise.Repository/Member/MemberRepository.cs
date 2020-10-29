@@ -23,8 +23,9 @@ namespace Splitwise.Repository
         #endregion
         #region Public Methods
 
-        public void DeleteMember(Member member)
+        public void DeleteMember(int memberId)
         {
+            var member = _dbContext.Members.Find(memberId);
             _dbContext.Members.Remove(member);
             _dbContext.SaveChanges();
         }
@@ -49,20 +50,23 @@ namespace Splitwise.Repository
                                         Name = u.Name
                                     };
 
-            var balanceOfEachUser = from e in _dbContext.Expenses
+            var IQuerybalanceOfEachUser = from e in _dbContext.Expenses
                                   join ed in _dbContext.ExpenseDetails
                                   on e.Id equals ed.ExpenseId
                                   where e.GroupId == groupId
-                                  select new
+                                  select new MemberDTO
                                   {
-                                      userId = ed.UserId,
-                                      balance = ed.AmountPaid - ed.AmountOwe
+                                      Id = ed.UserId,
+                                      Amount = ed.AmountPaid - ed.AmountOwe
                                   };
+            var balanceOfEachUser = IQuerybalanceOfEachUser.ToList();
             List<MemberDTO> memberDTOs = new List<MemberDTO>();
             foreach (var member in listOfGroupMember)
             {
-                var userBalance = (from num in balanceOfEachUser
-                                   select num.balance).Sum();
+                List<long> listOfUserBalance = (from num in balanceOfEachUser where num.Id == member.Id
+                                   select num.Amount).ToList();
+
+                var userBalance = listOfUserBalance.Sum();
 
                 var userReceivedSettlement = (from rs in listOfSettlement
                                               where member.Id == rs.PayeeUserId

@@ -46,8 +46,8 @@ namespace Splitwise.Core.ApiControllers
         }
         
         //GET : api/Members
-        [Route("Balance")]
-        [HttpGet]
+        [Route("Balance/{groupid}")]
+        [HttpGet("{groupid}")]
         public IActionResult GetWithBalance(int groupid)
         {
             if (_groupRepository.GroupExist(groupid))
@@ -74,11 +74,11 @@ namespace Splitwise.Core.ApiControllers
 
         //DELTE : api/Members
         [HttpDelete]
-        public IActionResult Delete(Member member)
+        public IActionResult Delete(int memberId)
         {
-            if (member != null)
+            if (memberId != null)
             {
-                _memberRepository.DeleteMember(member);
+                _memberRepository.DeleteMember(memberId);
                 return Ok();
             }
             return NotFound();

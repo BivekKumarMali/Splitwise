@@ -49,9 +49,9 @@ namespace Splitwise.Repository
             _dbContext.SaveChanges();
         }
 
-        public IEnumerable<ExpenseDTO> ExpenseByGroupId(Member member)
+        public IEnumerable<ExpenseDTO> ExpenseByGroupId(int groupId)
         {
-            var listOfExpense = _dbContext.Expenses.Where(x => x.GroupId == member.GroupId).OrderBy(x => x.TimeStamp).ToList();
+            var listOfExpense = _dbContext.Expenses.Where(x => x.GroupId == groupId).OrderBy(x => x.TimeStamp).ToList();
             var listOfUser = _dbContext.ApplicationUsers.ToList();
             return from e in listOfExpense
                    join u in listOfUser

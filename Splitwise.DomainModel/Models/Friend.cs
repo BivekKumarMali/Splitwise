@@ -12,10 +12,12 @@ namespace Splitwise.DomainModel.Models
         [Key]
         public long Id { get; set; }
 
-        [ForeignKey("User")]
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User1 { get; set; }
 
-        [ForeignKey("User")]
         public string FriendId { get; set; }
+        [ForeignKey("FriendId")]
+        public ApplicationUser User2 { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Splitwise.Repository.DTOs;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -122,6 +123,11 @@ namespace Splitwise.Repository
             IdentityUser identity = await _userManager.FindByIdAsync(user.UserId);
             return await _userManager.CheckPasswordAsync(identity, password);
 
+        }
+
+        public ApplicationUser FindByMail(string mail)
+        {
+            return _dbContext.ApplicationUsers.First(x => x.Email == mail);
         }
         #endregion
     }

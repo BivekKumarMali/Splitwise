@@ -14,8 +14,8 @@ namespace Splitwise.DomainModel.Models
 
         public string GroupName { get; set; }
 
-        [ForeignKey("User")]
         public string UserId { get; set; }
-
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
     }
 }
