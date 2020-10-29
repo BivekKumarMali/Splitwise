@@ -9,6 +9,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
     <ProjectReference Include="..\Splitwise.DomainModel\Splitwise.DomainModel.csproj" />
     <ProjectReference Include="..\Splitwise.Core\Splitwise.Core.csproj" />
     <ProjectReference Include="..\Splitwise.Repository\Splitwise.Repository.csproj" />

@@ -85,5 +85,6 @@ namespace Splitwise.Repository
         {
             return _dbContext.Settlements.Find(id) != null ? true : false;
         }
+        #endregion
     }
 }

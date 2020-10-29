@@ -20,14 +20,12 @@ namespace Splitwise.Repository
         public UserRepository(
             AppDbContext dbContext,
             UserManager<IdentityUser> userManager,
-            IConfiguration configuration,
-            IMapper mapper
+            IConfiguration configuration
             )
         {
             _dbContext = dbContext;
            _userManager = userManager;
             _configuration = configuration;
-            _mapper = mapper;
         }
 
 
@@ -37,7 +35,6 @@ namespace Splitwise.Repository
         private readonly AppDbContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
 
         #endregion
         #region Private method
@@ -68,9 +65,8 @@ namespace Splitwise.Repository
         #endregion
 
         #region Public method
-        public void AddApplicationUser(UserDTO newUser)
+        public void AddApplicationUser(ApplicationUser user)
         {
-            ApplicationUser user = _mapper.Map<ApplicationUser>(newUser);
             IdentityUser identityUser = new IdentityUser { Email = user.Email, UserName = user.Email };
             user.UserId = AddUser(identityUser, "123456");
             _dbContext.ApplicationUsers.Add(user);
@@ -106,9 +102,8 @@ namespace Splitwise.Repository
             });
         }
 
-        public void UpdateApplicationUser(UserDTO newUser)
+        public void UpdateApplicationUser(ApplicationUser user)
         {
-            ApplicationUser user = _mapper.Map<ApplicationUser>(newUser);
             var oldUserValue = GetUserByID(user.UserId);
             if(oldUserValue.Email != user.Email)
                 UpdateUser(user);
