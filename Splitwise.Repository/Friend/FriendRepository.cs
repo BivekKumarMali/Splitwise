@@ -45,6 +45,7 @@ namespace Splitwise.Repository
         public void AddFriend(string userId, string friendId)
         {
             Friend friend = SetFriend(userId, friendId);
+
             _dbContext.Friends.Add(friend);
             _dbContext.SaveChanges();
         }
@@ -82,6 +83,14 @@ namespace Splitwise.Repository
                    };
         }
 
+        public bool friendExist(string userId, string friendId)
+        {
+            return _dbContext.Friends.First(
+                x => 
+                (x.FriendId == userId && x.UserId == friendId) ||
+                (x.FriendId == friendId && x.UserId == userId)
+                ) != null ? true : false;
+        }
         #endregion
     }
 }

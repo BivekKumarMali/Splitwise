@@ -12,5 +12,6 @@ namespace Splitwise.Repository
         void AddFriend(string userId, string friendId);
         void RemoveFriend(string userId, string friendId);
        IEnumerable<FriendDTO> AllFriends(string userId);
+        bool friendExist(string userId, string friendId);
     }
 }

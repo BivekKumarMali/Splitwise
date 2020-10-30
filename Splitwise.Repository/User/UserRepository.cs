@@ -125,9 +125,27 @@ namespace Splitwise.Repository
 
         }
 
-        public ApplicationUser FindByMail(string mail)
+        public IEnumerable<UserDTO> FindByMail(string mail)
         {
-            return _dbContext.ApplicationUsers.First(x => x.Email == mail);
+            var user = from u in _dbContext.ApplicationUsers 
+                             where u.Email == mail
+                             select new UserDTO
+                             {
+                                 Id = u.UserId,
+                                 Name = u.Name,
+                                 Email = u.Email
+                             };
+            if (user == null)
+            {
+                return from u in _dbContext.ApplicationUsers.ToList()
+                        select new UserDTO
+                        {
+                            Id = u.UserId,
+                            Name = u.Name,
+                            Email = u.Email
+                        };
+            }
+            return user.ToList();
         }
         #endregion
     }

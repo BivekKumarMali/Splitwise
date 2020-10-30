@@ -104,7 +104,7 @@ namespace Splitwise.Core.ApiControllers
         [Route("Friends")]
         public virtual IActionResult AddFriend(Friend friend)
         {
-            if (_userRepository.UserExist(friend.UserId))
+            if (_userRepository.UserExist(friend.UserId) && _friendRepository.friendExist(friend.UserId, friend.FriendId))
             {
                 _friendRepository.AddFriend(friend.UserId, friend.FriendId);
                 return Ok();
@@ -125,9 +125,9 @@ namespace Splitwise.Core.ApiControllers
             return NotFound();
         }
 
-        // GET: api/Users/Friends
-        [HttpGet]
-        [Route("Friends")]
+        // GET: api/Users/Friends/userid
+        [HttpGet("{userid}")]
+        [Route("Friends/{userid}")]
         public IActionResult GetFriends(string userid)
         {
             if (_userRepository.UserExist(userid))

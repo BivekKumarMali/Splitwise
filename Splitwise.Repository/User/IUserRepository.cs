@@ -11,6 +11,6 @@ namespace Splitwise.Repository
         void UpdateApplicationUser(ApplicationUser user);
         object LoginCredentials(ApplicationUser user);
         Task<bool> UserValidation(ApplicationUser user, string password);
-        ApplicationUser FindByMail(string mail);
+        UserDTO FindByMail(string mail);
     }
 }

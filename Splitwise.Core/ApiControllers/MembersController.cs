@@ -63,7 +63,7 @@ namespace Splitwise.Core.ApiControllers
         [HttpPost]
         public IActionResult Add(Member member)
         {
-            if (member != null)
+            if (member != null && _memberRepository.memberExist(member))
             {
                 _memberRepository.AddMember(member);
                 return Ok();

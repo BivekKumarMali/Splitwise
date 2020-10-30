@@ -37,8 +37,11 @@ namespace Splitwise.Repository
 
         public void EditExpenseDetail(ExpenseDetail[] expenseDetails)
         {
-            _dbContext.UpdateRange(expenseDetails);
-            _dbContext.SaveChanges();
+            var listofExpenseDetails = _dbContext.ExpenseDetails.Where(x => x.ExpenseId == expenseDetails[0].ExpenseId).ToList();
+
+            _dbContext.RemoveRange(listofExpenseDetails);
+
+            AddExpenseDetail(expenseDetails);
         }
         // left
         public IEnumerable<ExpenseDetailDTO> ExpenseDetailByExpenseID(long expenseid)

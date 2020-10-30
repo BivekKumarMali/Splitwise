@@ -21,6 +21,11 @@ namespace Splitwise.Repository
 
         private readonly AppDbContext _dbContext;
         #endregion
+        #region Private Method
+
+        
+        #endregion
+
         #region Public Methods
 
         public void DeleteMember(int memberId)
@@ -32,9 +37,13 @@ namespace Splitwise.Repository
 
         public void AddMember(Member member)
         {
-            _dbContext.Members.Add(member);
-            _dbContext.SaveChanges();
+            if (!memberExist(member))
+            {
+                _dbContext.Members.Add(member);
+                _dbContext.SaveChanges();
+            }
         }
+
 
         public IEnumerable<MemberDTO> AllMemberWithBalance(int groupId)
         {
@@ -103,6 +112,11 @@ namespace Splitwise.Repository
                         Name = u.Name,
                         Amount = 0
                     };
+        }
+
+        public bool memberExist(Member member)
+        {
+            return _dbContext.Members.First(x => x.GroupId == member.GroupId && x.UserId == member.UserId) != null ? true : false;
         }
         #endregion
     }

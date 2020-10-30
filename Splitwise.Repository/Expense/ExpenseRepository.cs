@@ -5,6 +5,7 @@ using Splitwise.Repository.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Splitwise.Repository
@@ -53,6 +54,7 @@ namespace Splitwise.Repository
         {
             var listOfExpense = _dbContext.Expenses.Where(x => x.GroupId == groupId).OrderBy(x => x.TimeStamp).ToList();
             var listOfUser = _dbContext.ApplicationUsers.ToList();
+                        
             return from e in listOfExpense
                    join u in listOfUser
                    on e.UserId equals u.UserId
@@ -61,7 +63,7 @@ namespace Splitwise.Repository
                        Id = e.Id,
                        ExpenseName = e.ExpenseName,
                        UserName = u.Name,
-                       TimeStamp = e.TimeStamp.ToString()
+                       TimeStamp = e.TimeStamp.ToString(),
                    };
 
         }

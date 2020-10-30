@@ -43,6 +43,7 @@ namespace Splitwise.Repository
         public void AddGroup(DomainModel.Models.Group group)
         {
             _dbContext.Groups.Add(group);
+            _dbContext.Members.Add(new DomainModel.Models.Member { GroupId = group.Id, UserId = group.UserId });
             _dbContext.SaveChanges();
         }
 
