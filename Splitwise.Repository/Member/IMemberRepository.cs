@@ -12,6 +12,6 @@ namespace Splitwise.Repository
         void AddMember(Member member);
         IEnumerable<T> AllMember(int groupId);
         IEnumerable<T> AllMemberWithBalance(int groupId);
-        bool memberExist(Member member)
+        bool memberExist(Member member);
     }
 }

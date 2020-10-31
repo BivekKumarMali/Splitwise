@@ -1,5 +1,6 @@
 ﻿using Splitwise.DomainModel.Models;
 using Splitwise.Repository.DTOs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Splitwise.Repository
@@ -11,6 +12,6 @@ namespace Splitwise.Repository
         void UpdateApplicationUser(ApplicationUser user);
         object LoginCredentials(ApplicationUser user);
         Task<bool> UserValidation(ApplicationUser user, string password);
-        UserDTO FindByMail(string mail);
+        IEnumerable<UserDTO> FindByMail(string mail);
     }
 }

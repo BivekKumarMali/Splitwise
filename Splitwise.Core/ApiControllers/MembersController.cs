@@ -63,20 +63,24 @@ namespace Splitwise.Core.ApiControllers
         [HttpPost]
         public IActionResult Add(Member member)
         {
-            if (member != null && _memberRepository.memberExist(member))
+            if (member != null)
             {
-                _memberRepository.AddMember(member);
-                return Ok();
+                if (_memberRepository.memberExist(member))
+                {
+                    _memberRepository.AddMember(member);
+                    return Ok();
+                }
+                return BadRequest(new { message = "MemberLaredy exists" });
             }
             return NotFound();
 
         }
 
         //DELTE : api/Members
-        [HttpDelete]
+        [HttpDelete("{memberId}")]
         public IActionResult Delete(int memberId)
         {
-            if (memberId != null)
+            if (memberId > 0)
             {
                 _memberRepository.DeleteMember(memberId);
                 return Ok();

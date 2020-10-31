@@ -62,7 +62,7 @@ namespace Splitwise.Core.ApiControllers
         }
 
         //DELETE : api/Settlement
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
             if (_settlementRepository.SettlementExists(id))

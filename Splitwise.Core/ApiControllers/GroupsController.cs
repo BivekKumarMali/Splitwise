@@ -82,7 +82,7 @@ namespace Splitwise.Core.ApiControllers
         }
 
         // DELETE: api/Groups
-        [HttpDelete]
+        [HttpDelete("{groupId}")]
         public virtual IActionResult Delete(int groupId)
         {
             if (_groupRepository.GroupExist(groupId))

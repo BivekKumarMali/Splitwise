@@ -78,7 +78,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         }
 
         //DELETE : api/Expenses
-        [HttpGet]
+        [HttpDelete("{expenseId}")]
         public IActionResult Delete(long expenseId)
         {
             if (_expenseRepository.ExpenseExist(expenseId))
