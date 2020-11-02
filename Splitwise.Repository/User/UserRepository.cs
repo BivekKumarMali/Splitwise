@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Splitwise.Data;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Splitwise.Repository
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         #region Contructor
         public UserRepository(
@@ -25,7 +24,7 @@ namespace Splitwise.Repository
             )
         {
             _dbContext = dbContext;
-           _userManager = userManager;
+            _userManager = userManager;
             _configuration = configuration;
         }
 
@@ -44,13 +43,13 @@ namespace Splitwise.Repository
         {
             var addUserManagerStatus = _userManager.CreateAsync(identityUser, password);
             addUserManagerStatus.Wait();
-            var check = addUserManagerStatus.Result.Succeeded;
+            _ = addUserManagerStatus.Result;
             var TaskUser = _userManager.FindByEmailAsync(identityUser.Email);
             TaskUser.Wait();
             return TaskUser.Result.Id;
         }
 
-        private bool UpdateUser(ApplicationUser user) 
+        private bool UpdateUser(ApplicationUser user)
         {
             IdentityUser identityUser = new IdentityUser { Id = user.UserId, UserName = user.Email, Email = user.Email };
             var updateUserManagerStatus = _userManager.UpdateAsync(identityUser);
@@ -58,11 +57,16 @@ namespace Splitwise.Repository
             return updateUserManagerStatus.Result.Succeeded;
         }
 
-        private ApplicationUser GetUserByID(string userid) 
+        private ApplicationUser GetUserByID(string userid)
         {
             return _dbContext.ApplicationUsers.Find(userid);
         }
 
+
+        private ApplicationUser GetUserByMali(string email)
+        {
+            return _dbContext.ApplicationUsers.First(x => x.Email == email);
+        }
         #endregion
 
         #region Public method
@@ -74,9 +78,9 @@ namespace Splitwise.Repository
             _dbContext.SaveChanges();
         }
 
-        public object LoginCredentials(ApplicationUser user)
+        public object LoginCredentials(string email)
         {
-            user = GetUserByID(user.UserId);
+            ApplicationUser user = GetUserByMali(email);
             var authClaims = new List<Claim>
                         {
                             new Claim("name", user.Name),
@@ -85,7 +89,7 @@ namespace Splitwise.Repository
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         };
 
-            
+
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(
@@ -103,11 +107,10 @@ namespace Splitwise.Repository
             });
         }
 
+
         public void UpdateApplicationUser(ApplicationUser user)
         {
-            var oldUserValue = GetUserByID(user.UserId);
-            if(oldUserValue.Email != user.Email)
-                UpdateUser(user);
+            UpdateUser(user);
             _dbContext.ApplicationUsers.Update(user);
             _dbContext.SaveChanges();
 
@@ -115,35 +118,35 @@ namespace Splitwise.Repository
 
         public bool UserExist(string userid)
         {
-            return _dbContext.ApplicationUsers.Find(userid) != null ? true : false;
+            return _dbContext.ApplicationUsers.Find(userid) != null;
         }
 
-        public async Task<bool> UserValidation(ApplicationUser user, string password)
+        public async Task<bool> UserValidation(string email, string password)
         {
-            IdentityUser identity = await _userManager.FindByIdAsync(user.UserId);
+            IdentityUser identity = await _userManager.FindByEmailAsync(email);
             return await _userManager.CheckPasswordAsync(identity, password);
 
         }
 
         public IEnumerable<UserDTO> FindByMail(string mail)
         {
-            var user = from u in _dbContext.ApplicationUsers 
-                             where u.Email == mail
-                             select new UserDTO
-                             {
-                                 Id = u.UserId,
-                                 Name = u.Name,
-                                 Email = u.Email
-                             };
+            var user = from u in _dbContext.ApplicationUsers
+                       where u.Email == mail
+                       select new UserDTO
+                       {
+                           Id = u.UserId,
+                           Name = u.Name,
+                           Email = u.Email
+                       };
             if (user == null)
             {
                 return from u in _dbContext.ApplicationUsers.ToList()
-                        select new UserDTO
-                        {
-                            Id = u.UserId,
-                            Name = u.Name,
-                            Email = u.Email
-                        };
+                       select new UserDTO
+                       {
+                           Id = u.UserId,
+                           Name = u.Name,
+                           Email = u.Email
+                       };
             }
             return user.ToList();
         }

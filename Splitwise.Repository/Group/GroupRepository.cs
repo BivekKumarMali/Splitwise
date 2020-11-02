@@ -32,10 +32,12 @@ namespace Splitwise.Repository
         public IEnumerable<GroupDTO> AllGroups(string userId)
         {
             var listOfGroups = _dbContext.Groups.ToList().Where(x => x.UserId == userId);
+            var name = _dbContext.ApplicationUsers.Find(userId).Name;
             return listOfGroups.Select(g => new GroupDTO
             {
                 Id = g.Id,
-                GroupName = g.GroupName
+                GroupName = g.GroupName,
+                UserName = name
             }).ToList();
 
         }

@@ -10,8 +10,8 @@ namespace Splitwise.Repository
         bool UserExist(string userid);
         void AddApplicationUser(ApplicationUser user);
         void UpdateApplicationUser(ApplicationUser user);
-        object LoginCredentials(ApplicationUser user);
-        Task<bool> UserValidation(ApplicationUser user, string password);
+        object LoginCredentials(string email);
+        Task<bool> UserValidation(string email, string password);
         IEnumerable<UserDTO> FindByMail(string mail);
     }
 }

@@ -62,7 +62,7 @@ namespace Splitwise.Core.ApiControllers
         }
 
         //DELETE : api/Settlement
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public IActionResult Delete(long id)
         {
             if (_settlementRepository.SettlementExists(id))
@@ -73,7 +73,7 @@ namespace Splitwise.Core.ApiControllers
             return BadRequest();
 
         }
-
+        /*
         //GET : api/Setlement/{userid}
         [Route("{userid}")]
         [HttpGet]
@@ -86,7 +86,7 @@ namespace Splitwise.Core.ApiControllers
             return NotFound();
 
         }
-
+        */
 
 
         #endregion

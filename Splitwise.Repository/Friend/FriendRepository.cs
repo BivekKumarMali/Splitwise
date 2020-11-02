@@ -73,7 +73,7 @@ namespace Splitwise.Repository
                 else listOfFriendUserId.Add(friend.UserId);
             }
 
-            return from u in _dbContext.ApplicationUsers
+            return from u in _dbContext.ApplicationUsers.ToList()
                    join f in listOfFriendUserId
                    on u.UserId equals f
                    select new FriendDTO
@@ -85,11 +85,11 @@ namespace Splitwise.Repository
 
         public bool friendExist(string userId, string friendId)
         {
-            return _dbContext.Friends.First(
-                x => 
+            return _dbContext.Friends.FirstOrDefault(
+                x =>
                 (x.FriendId == userId && x.UserId == friendId) ||
                 (x.FriendId == friendId && x.UserId == userId)
-                ) != null ? true : false;
+                ) == null;
         }
         #endregion
     }

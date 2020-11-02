@@ -66,16 +66,16 @@ namespace Splitwise.Core.ApiControllers
 
         }
 
-        // GET: api/Users/Login
-        [HttpGet]
+        // POST: api/Users/Login
+        [HttpPost]
         [Route("Login")]
-        public IActionResult Login(ApplicationUser user, string password)
+        public IActionResult Login(Login user)
         {
-            var task = _userRepository.UserValidation(user, password);
+            var task = _userRepository.UserValidation(user.Email, user.Password);
             task.Wait();
-            if (_userRepository.UserExist(user.UserId) && task.Result)
+            if (task.Result)
             {
-                return Ok(_userRepository.LoginCredentials(user));
+                return Ok(_userRepository.LoginCredentials(user.Email));
             }
             else
             {
@@ -126,8 +126,8 @@ namespace Splitwise.Core.ApiControllers
         }
 
         // GET: api/Users/Friends/userid
-        [HttpGet("{userid}")]
-        [Route("Friends/{userid}")]
+        [HttpGet]
+        [Route("Friends")]
         public IActionResult GetFriends(string userid)
         {
             if (_userRepository.UserExist(userid))

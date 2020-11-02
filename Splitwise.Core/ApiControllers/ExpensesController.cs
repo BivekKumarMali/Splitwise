@@ -40,9 +40,8 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         #region Public methods
 
-        //GET : api/Expenses/1
-        [Route("ByGroupID/{groupId}")]
-        [HttpGet("{groupId}")]
+        //GET : api/Expenses
+        [HttpGet]
         public IActionResult GetByGroupID(int groupId)
         {
             if (_groupRepository.GroupExist(groupId))
@@ -78,7 +77,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         }
 
         //DELETE : api/Expenses
-        [HttpDelete("{expenseId}")]
+        [HttpDelete]
         public IActionResult Delete(long expenseId)
         {
             if (_expenseRepository.ExpenseExist(expenseId))
@@ -104,8 +103,8 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         }*/
 
         // GET : api/Expenses/ExpenseDetails/1
-        [Route("ExpenseDetails/{expenseid}")]
-        [HttpGet("{expenseid}")]
+        [Route("ExpenseDetails")]
+        [HttpGet]
         public IActionResult GetExpenseDetail(long expenseid)
         {
             if (_expenseRepository.ExpenseExist(expenseid))
