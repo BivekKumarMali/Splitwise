@@ -1,0 +1,51 @@
+.box {
+  margin-top: 80px;
+  margin-left: 145px;
+  height: 88vh;
+  min-width: 300px;
+  border-left: 1px solid var(--secondary-color);
+  border-right: 1px solid var(--secondary-color);
+  border-bottom: 1px solid var(--secondary-color);
+}
+.box-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  border-bottom: 1px solid var(--secondary-color);
+}
+.box-button button {
+  margin-left: 10px;
+}
+.box-header h5 {
+  font-weight: 700;
+}
+.box-settlement {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: var(--minimal-color);
+}
+.box-settlement i {
+  margin: 0 auto;
+  text-align: center;
+}
+.box-settlement text {
+  display: flex;
+  flex-direction: row;
+}
+.name {
+  font-size: 20px;
+  font-weight: 500;
+}
+.amount {
+  margin-left: 20px;
+  font-size: 23px;
+  font-weight: 500;
+}
+.box-settlement .delete {
+  cursor: pointer;
+}
+
+.box-settlement .delete:hover {
+  color: var(--primary-color);
+}

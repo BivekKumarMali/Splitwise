@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="Box shadow p-3 mb-5 rounded">
+        <div class="header">
+          <ul>
+            <li [routerLink]="['/login']">Login</li>
+            <li [routerLink]="['/register']">
+              Register</li>
+          </ul>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

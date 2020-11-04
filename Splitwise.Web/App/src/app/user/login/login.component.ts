@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Login } from 'src/app/model/login';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  login: Login;
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
+  Login(form: NgForm) {
+    this.login = form.value;
+    console.log(this.login);
+    this.RouteToHome();
+  }
+
+  RouteToHome() {
+    this.router.navigate(['\home']);
+  }
 }

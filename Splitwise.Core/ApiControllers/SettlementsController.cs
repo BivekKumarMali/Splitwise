@@ -73,20 +73,19 @@ namespace Splitwise.Core.ApiControllers
             return BadRequest();
 
         }
-        /*
+
         //GET : api/Setlement/{userid}
-        [Route("{userid}")]
+        [Route("")]
         [HttpGet]
-        public IActionResult GetByUserID(Friend friend)
+        public IActionResult GetByUserID(string userId)
         {
-            if (_userRepository.UserExist(friend.UserId) && _userRepository.UserExist(friend.FriendId))
+            if (_userRepository.UserExist(userId))
             {
-                return Ok(_settlementRepository.SettlementByUserId(friend));
+                return Ok(_settlementRepository.AllTransaction(userId));
             }
             return NotFound();
 
         }
-        */
 
 
         #endregion

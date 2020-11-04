@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+
+  User: User;
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
 
+
+  AddUser(form: NgForm) {
+    this.User = form.value;
+    console.log(this.User);
+    this.RouteToLogin();
+  }
+
+  RouteToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

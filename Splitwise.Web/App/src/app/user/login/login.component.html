@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <h2>Registration</h2>
+        <form #form="ngForm" (ngSubmit)="Login(form)" ngNativeValidate>
+          <div class="Addform ">
+            <label for="email">Email :-</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter Email" id="email" required
+              #email="ngModel" ngModel>
+          </div>
+          <div class="Addform ">
+            <label for="password">Password :-</label>
+            <input type="password" class="form-control" name="password" placeholder="Enter Your Password" id="password"
+              required #password="ngModel" ngModel>
+          </div>
+          <div class="buttonform">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

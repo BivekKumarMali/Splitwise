@@ -1,1 +1,88 @@
-<p>dashboard works!</p>
+<div class="sidenav">
+  <hr class="dark">
+  <a (click)="displayFriendFrom()">Add Friend <i class="fa fa-plus"></i></a>
+  <hr class="light">
+  <ul>
+    <li>rav</li>
+    <li>rav</li>
+  </ul>
+  <hr class="dark">
+  <a (click)="displayGroupFrom()">Add Group <i class=" fa fa-plus"></i></a>
+  <hr class="light">
+  <ul>
+    <li class="btn" *ngFor="let item of groupNames" [routerLink]="['/home/group', item.id]"
+      routerLinkActive="router-link-active">
+      {{item.groupName}}</li>
+  </ul>
+  <hr class="dark">
+  <a [routerLink]="['/home/expense']" routerLinkActive="router-link-active">All Expense</a>
+  <hr class="dark">
+  <a [routerLink]="['/home/transaction']" routerLinkActive="router-link-active">All Transaction</a>
+  <hr class="dark">
+</div>
+<div class="GroupFormOverlay" [ngClass]="activeGroup">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ElementGroupForm shadow p-3 mb-5 bg-white rounded">
+          <div class="header title">
+            <i class="fa fa-edit"> {{pagetitle}} Group</i>
+            <a class="float-right up" (click)="displayGroupFrom()"><i class="fa fa-times"></i></a>
+            <div class="Editform">
+              <hr>
+              <form #groupForm="ngForm" (ngSubmit)="AddGroup(groupForm)" ngNativeValidate>
+                <div class="Addform ">
+                  <label for="name">Group Name :-</label>
+                  <input type="text" class="form-control" name="name" placeholder="Enter Group Name" id="name" required
+                    [(ngModel)]="group.groupName">
+                </div>
+                <div class="buttonform">
+                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="reset" class="btn btn-danger" (click)="displayGroupFrom()">Cancel</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="FriendFormOverlay" [ngClass]="activeFriend">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ElementFriendForm shadow p-3 mb-5 bg-white rounded">
+          <div class="header title">
+            <i class="fa fa-edit"> {{pagetitle}} Friend</i>
+            <a class="float-right up" (click)="displayFriendFrom()"><i class="fa fa-times"></i></a>
+            <div class="Editform">
+              <hr>
+              <form #form="ngForm" (ngSubmit)="SearchFriend(form)" ngNativeValidate>
+                <div class="Addform ">
+                  <label for="mail">Friend Email :-</label>
+                  <input type="text" class="form-control" name="mail" placeholder="Enter Email" id="mail" required
+                    ngModel #mail="ngModel">
+                </div>
+                <div class="buttonform">
+                  <button type="submit" class="btn btn-primary">Search</button>
+                  <button type="reset" class="btn btn-danger" (click)="displayFriendFrom()">Cancel</button>
+                </div>
+              </form>
+              <div class="list">
+                <ul *ngIf="searchResult">
+                  <li *ngFor="let item of searchResult" (click)="AddFriend(item.id)">
+                    <p>{{item.name}}</p><i class="fa fa-plus"></i>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

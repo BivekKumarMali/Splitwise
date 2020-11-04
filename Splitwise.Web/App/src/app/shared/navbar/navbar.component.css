@@ -1,0 +1,38 @@
+nav {
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.navBar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+  padding: 20px 0px 0 10px;
+  z-index: 1000;
+}
+.navBar .brand-name {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  transition: all 5s linear;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+.primary-btn {
+  margin-top: 8px;
+  height: 30px;
+  width: 100px;
+  padding-top: 2px;
+}
+.primary-btn:hover {
+  width: 106px;
+  letter-spacing: 2px;
+  background-color: var(--minimal-color);
+}

@@ -24,6 +24,31 @@ namespace Splitwise.Repository
         #endregion
 
         #region Private Method
+        private IEnumerable<FriendDTO> ListOfFriendByUserID(string userId)
+        {
+            List<string> listOfFriendUserId = new List<string>();
+
+            var listOfFriends = _dbContext.Friends.Where
+                (x =>
+                    x.FriendId == userId || x.UserId == userId
+            ).ToList();
+
+            // Filter Outing my userId from lisOfFriends to get the list of my frineds userId
+            foreach (var friend in listOfFriends)
+            {
+                if (friend.UserId == userId) listOfFriendUserId.Add(friend.FriendId);
+                else listOfFriendUserId.Add(friend.UserId);
+            }
+
+            return from u in _dbContext.ApplicationUsers.ToList()
+                   join f in listOfFriendUserId
+                   on u.UserId equals f
+                   select new FriendDTO
+                   {
+                       Id = u.UserId,
+                       Name = u.Name
+                   };
+        }
 
         #endregion
         #region Public method
@@ -71,12 +96,13 @@ namespace Splitwise.Repository
                     (x.PayeeUserId == friend.FriendId && x.PayUserId == friend.UserId)
                 ).ToList();
             ApplicationUser friendDetails = _dbContext.ApplicationUsers.Find(friend.FriendId);
+
             return from s in listofSettlement
                    select new SettlementDTO
                    {
                        Id = s.Id,
                        Amount = s.Amount,
-                       PayeeName = friend.UserId == s.PayeeUserId ? "You" : friendDetails.Name,
+                       PayeeName = friend.UserId == s.PayUserId ? "You" : friendDetails.Name,
                        ReceiverName = friend.UserId == s.PayeeUserId ? "You" : friendDetails.Name
                    };
         }
@@ -84,6 +110,25 @@ namespace Splitwise.Repository
         public bool SettlementExists(long id)
         {
             return _dbContext.Settlements.Find(id) != null ? true : false;
+        }
+
+        public IEnumerable<SettlementDTO> AllTransaction(string userId)
+        {
+            var listofSettlement = _dbContext.Settlements.Where
+                (x =>
+                    (x.PayeeUserId == userId || x.PayUserId == userId)
+                ).ToList();
+            var listOfFriend = ListOfFriendByUserID(userId);
+            return from s in listofSettlement
+                   join f in listOfFriend
+                   on 
+                   select new SettlementDTO
+                   {
+                       Id = s.Id,
+                       Amount = s.Amount,
+                       PayeeName = userId == s.PayUserId ? "You" : friendDetails.Name,
+                       ReceiverName = userId == s.PayeeUserId ? "You" : friendDetails.Name
+                   };
         }
         #endregion
     }

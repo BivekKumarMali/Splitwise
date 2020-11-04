@@ -17,7 +17,6 @@ import { SharedModule } from '../shared/shared.module';
     SharedModule,
     RouterModule.forChild([
       { path: 'friend', component: FriendComponent },
-      { path: '', redirectTo: 'friend', pathMatch: 'full' },
       { path: 'expense', component: ExpenseComponent },
       { path: 'group/:groupId', component: GroupComponent },
       { path: 'transaction', component: TransactionComponent }

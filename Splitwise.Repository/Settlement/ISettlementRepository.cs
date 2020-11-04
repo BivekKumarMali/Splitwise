@@ -13,5 +13,6 @@ namespace Splitwise.Repository
         void DeleteSettlement(long id);
         IEnumerable<T> SettlementByUserId(Friend friend);
         bool SettlementExists(long id);
+        IEnumerable<T> AllTransaction(string userId);
     }
 }

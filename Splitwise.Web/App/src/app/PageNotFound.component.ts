@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   template: `
     <h1>HTTP 404</h1>
     <p>Page Not Found</p>
-    <a [routerLink]="['/home']" routerLinkActive="router-link-active" >Home</a>
+    <a>Home</a>
     `
 })
 export class PageNotFoundComponent { }

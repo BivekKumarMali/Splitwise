@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+
+  AddOpenClass: string;
+  AddSideNavClass: string;
+  AddToCross: string;
+  isLoading: string;
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
 
 }

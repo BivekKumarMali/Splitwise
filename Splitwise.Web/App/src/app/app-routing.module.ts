@@ -5,12 +5,16 @@ import { AuthGuard } from '../app/core/auth/auth.guard';
 import { RegisterComponent } from './user/register/register.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './PageNotFound.component';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: '', component: UserComponent,
+    data: { preload: false },
+    loadChildren: () =>
+      import('./user/user.module').then(m => m.UserModule)
+  },
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     data: { preload: false },
