@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettlementDTO } from 'src/app/model/models';
 
 @Component({
   selector: 'app-transaction',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionComponent implements OnInit {
 
+  Settlements: SettlementDTO[];
   constructor() { }
 
   ngOnInit(): void {
   }
+  DeleteSettlement(id: number) { }
 
 }

@@ -7,15 +7,20 @@ import { HomeComponent } from './home.component';
 import { FriendComponent } from './friend/friend.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
 @NgModule({
-  declarations: [GroupComponent, ExpenseComponent, TransactionComponent, HomeComponent, FriendComponent],
+  declarations: [GroupComponent, ExpenseComponent, TransactionComponent, HomeComponent, FriendComponent, DashboardComponent],
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     RouterModule.forChild([
+      { path: 'dashboard', component: DashboardComponent },
+      { path: '', redirectTo: 'dashboard' },
       { path: 'friend', component: FriendComponent },
       { path: 'expense', component: ExpenseComponent },
       { path: 'group/:groupId', component: GroupComponent },

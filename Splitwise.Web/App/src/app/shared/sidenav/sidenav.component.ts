@@ -3,11 +3,11 @@ import { NgForm } from '@angular/forms';
 import { FriendDTO, Group, GroupDTO } from 'src/app/model/models';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class SidenavComponent implements OnInit {
 
   pagetitle = 'Add';
   searchResult: FriendDTO[];

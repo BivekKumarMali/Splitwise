@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, DashboardComponent],
+  declarations: [NavbarComponent, SidenavComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -16,6 +16,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
 
-  exports: [NavbarComponent, DashboardComponent]
+  exports: [NavbarComponent, SidenavComponent]
 })
 export class SharedModule { }

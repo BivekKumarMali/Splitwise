@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 1px solid var(--secondary-color);
+}
+.vl {
+  border-left: 1px solid var(--secondary-color);
+  height: 60px;
+}
+p {
+  margin: 0 auto;
+}
+.header-section {
+  text-align: center;
+}
+
+.friend-detail {
+  min-width: 100px;
+}
+
+.friend {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: var(--minimal-color);
+  justify-content: space-evenly;
+}

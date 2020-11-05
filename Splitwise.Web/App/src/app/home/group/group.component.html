@@ -5,21 +5,144 @@
         <div class="box-header">
           <h5>Group Name</h5>
           <div class="box-button">
-            <button class="btn btn-primary">Add Expense</button>
-            <button class="btn btn-warning">Settle Up</button>
+            <button class="btn btn-primary" (click)="displayExpenseFrom()">Add Expense</button>
+            <button class="btn btn-warning" (click)="displaySettlementFrom()">Settle Up</button>
           </div>
         </div>
-        <div class="box-settlement">
+        <div class="box-middle" *ngFor="let item of Settlements">
           <i class="fa fa-bitcoin fa-2x"></i>
-          <div class="texting">
-            <span class="name">He</span>
+          <div class="settlement-detail">
+            <span class="name">{{item.payeeName}}</span>
             <span> paid</span>
-            <span class="name"> Him</span>
-            <span class="amount"> amount ₹</span>
+            <span class="name"> {{item.receiverName}}</span>
+            <span class="amount"> {{item.amount}} ₹</span>
           </div>
-          <i class="delete fa fa-trash fa-2x"></i>
+          <i class="delete fa fa-trash fa-2x" (click)="DeleteSettlement(item.id)"></i>
         </div>
-        <div class="box-expense"></div>
+        <div class="box-expense" *ngFor="let item of Expenses">
+          <div class="dates">
+            <p class="month">Oct</p>
+            <p class="date">{{item.timeStamp}}</p>
+          </div>
+          <p class="name">{{item.expenseName}}</p>
+          <p class="name">{{item.userName}} paid {{item.amount}} ₹</p>
+          <i class="delete fa fa-edit fa-2x" (click)="displayExpenseFrom(item.id)"></i>
+        </div>
+      </div>
+      <div class="box-members">
+        <div class="box-member-details" *ngFor="let item of MemberWithBalance">
+          <i class="fa fa-user-circle fa-2x"></i>
+          <div class="member-detail">
+            <p class="memberName">{{item.name}}</p>
+            <p class="memberAmount">{{item.amount}}</p>
+          </div>
+        </div>
+        <hr *ngIf="MemberWithBalance">
+        <i class="fa fa-plus" (click)="displayMemberFrom()">Add Members</i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="FormOverlay" [ngClass]="activateSettlement">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ElementForm shadow p-3 mb-5 bg-white rounded">
+          <div class="header title">
+            <i class="fa fa-edit">Add Settlement</i>
+            <a class="float-right up" (click)="displaySettlementFrom()"><i class="fa fa-times"></i></a>
+            <div class="Editform">
+              <hr>
+              <form #form="ngForm" (ngSubmit)="AddSettlement(form)" ngNativeValidate>
+                <div class="Addform">
+                  <label for="member">Members :-</label>
+                  <select id="member" class="form-control" name="member" required ngModel #memberId="ngModel">
+                    <option [value]="item.id" *ngFor="let item of Members">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="Addform ">
+                  <label for="amount">Amount :-</label>
+                  <input type="number" class="form-control" name="amount" placeholder="Enter Amount" id="amount"
+                    required ngModel #amount="ngModel">
+                </div>
+                <div class="buttonform">
+                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="reset" class="btn btn-danger" (click)="displaySettlementFrom()">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Later-->
+<div class="FormOverlay" [ngClass]="activateExpense">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ElementForm shadow p-3 mb-5 bg-white rounded">
+          <div class="header title">
+            <i class="fa fa-edit">Add Settlement</i>
+            <a class="float-right up" (click)="displayExpenseFrom()"><i class="fa fa-times"></i></a>
+            <div class="Editform">
+              <hr>
+              <form #form="ngForm" (ngSubmit)="AddSettlement(form)" ngNativeValidate>
+                <div class="Addform">
+                  <label for="member">Members :-</label>
+                  <select id="member" class="form-control" name="member" required ngModel #memberId="ngModel">
+                    <option [value]="item.id" *ngFor="let item of Members">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="Addform ">
+                  <label for="amount">Amount :-</label>
+                  <input type="number" class="form-control" name="amount" placeholder="Enter Amount" id="amount"
+                    required ngModel #amount="ngModel">
+                </div>
+                <div class="buttonform">
+                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="reset" class="btn btn-danger" (click)="displaySettlementFrom()">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="FormOverlay" [ngClass]="activateMember">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ElementForm shadow p-3 mb-5 bg-white rounded">
+          <div class="header title">
+            <i class="fa fa-edit">Add Member</i>
+            <a class="float-right up" (click)="displayMemberFrom()"><i class="fa fa-times"></i></a>
+            <div class="Editform">
+              <hr>
+              <form #form="ngForm" (ngSubmit)="AddMember(form)" ngNativeValidate>
+                <p class="note">Add as friend before adding member</p>
+                <div class="Addform">
+                  <label for="friend">Friends :-</label>
+                  <select id="friend" class="form-control" name="friend" required ngModel #friendId="ngModel">
+                    <option [value]="item.id" *ngFor="let item of Friends">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="Addform" [hidden]="!ShowMemberError">
+                  <p>Friend already added</p>
+                </div>
+                <div class="buttonform">
+                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="reset" class="btn btn-danger" (click)="displayMemberFrom()">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

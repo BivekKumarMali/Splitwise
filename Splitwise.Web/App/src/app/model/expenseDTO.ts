@@ -11,10 +11,10 @@
  */
 
 
-export interface ExpenseDTO { 
-    id?: number;
-    expenseName?: string;
-    amount?: number;
-    userName?: string;
-    timeStamp?: string;
+export interface ExpenseDTO {
+  id?: number;
+  expenseName?: string;
+  amount?: number;
+  userName?: string;
+  timeStamp?: string;
 }

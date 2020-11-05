@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>Dashboard</h5>
+        </div>
+        <div class="header">
+          <div class="header-section">
+            <h6>You Owe Amount</h6>
+            <p>5465</p>
+          </div>
+          <div class="vl"></div>
+          <div class="header-section">
+            <h6>You Are Owe Amount</h6>
+            <p>5465</p>
+          </div>
+          <div class="vl"></div>
+          <div class="header-section">
+            <h6>Total Balance</h6>
+            <p>5465</p>
+          </div>
+        </div>
+        <div class="friend" *ngFor="let item of Friends">
+          <i class="fa fa-user fa-2x"></i>
+          <div class="friend-detail">
+            <span class="name">{{item.name}}</span>
+            <span class="amount"> later ₹</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>

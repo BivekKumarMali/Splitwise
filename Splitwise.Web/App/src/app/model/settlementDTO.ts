@@ -11,9 +11,9 @@
  */
 
 
-export interface SettlementDTO { 
-    id?: number;
-    payeeName?: string;
-    receiverName?: string;
-    amount?: number;
+export interface SettlementDTO {
+  id?: number;
+  payeeName?: string;
+  receiverName?: string;
+  amount?: number;
 }
