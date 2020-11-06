@@ -3,8 +3,7 @@
   <a (click)="displayFriendFrom()">Add Friend <i class="fa fa-plus"></i></a>
   <hr class="light">
   <ul>
-    <li>rav</li>
-    <li>rav</li>
+    <li *ngFor="let item of Friends">{{item.name}}</li>
   </ul>
   <hr class="dark">
   <a (click)="displayGroupFrom()">Add Group <i class=" fa fa-plus"></i></a>
@@ -61,10 +60,13 @@
             <div class="Editform">
               <hr>
               <form #form="ngForm" (ngSubmit)="SearchFriend(form)" ngNativeValidate>
+                <p class="text-danger" *ngIf="errorMessage">
+                  Already Friend
+                </p>
                 <div class="Addform ">
                   <label for="mail">Friend Email :-</label>
-                  <input type="text" class="form-control" name="mail" placeholder="Enter Email" id="mail" required
-                    ngModel #mail="ngModel">
+                  <input type="text" class="form-control" name="mail" placeholder="Enter Email" id="mail" ngModel
+                    #mail="ngModel">
                 </div>
                 <div class="buttonform">
                   <button type="submit" class="btn btn-primary">Search</button>

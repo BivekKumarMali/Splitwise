@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Splitwise.Core", "Splitwise
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Splitwise.Repository", "Splitwise.Repository\Splitwise.Repository.csproj", "{B7AAFD0C-031C-4565-A4C3-8C0BEC6818C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Splitwise.Repository.Test", "Splitwise.Repository.Test\Splitwise.Repository.Test.csproj", "{70F738B5-98B1-4254-B7AC-A6C4D2A78D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Splitwise.Repository.Test", "Splitwise.Repository.Test\Splitwise.Repository.Test.csproj", "{70F738B5-98B1-4254-B7AC-A6C4D2A78D95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,7 +36,6 @@ Global
 		{B7AAFD0C-031C-4565-A4C3-8C0BEC6818C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7AAFD0C-031C-4565-A4C3-8C0BEC6818C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{70F738B5-98B1-4254-B7AC-A6C4D2A78D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70F738B5-98B1-4254-B7AC-A6C4D2A78D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70F738B5-98B1-4254-B7AC-A6C4D2A78D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70F738B5-98B1-4254-B7AC-A6C4D2A78D95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

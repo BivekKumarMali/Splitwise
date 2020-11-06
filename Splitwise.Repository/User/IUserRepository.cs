@@ -13,5 +13,6 @@ namespace Splitwise.Repository
         object LoginCredentials(string email);
         Task<bool> UserValidation(string email, string password);
         IEnumerable<UserDTO> FindByMail(string mail);
+        bool UserExistByMail(string email);
     }
 }

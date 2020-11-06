@@ -3,6 +3,9 @@
     <div class="col-md-12">
       <div>
         <h2>Registration</h2>
+        <p class="text-danger" *ngIf="errorMessage">
+          User Already Exist
+        </p>
         <form #form="ngForm" (ngSubmit)="AddUser(form)" ngNativeValidate>
           <div class="Addform ">
             <label for="name">Enter Your Name :-</label>

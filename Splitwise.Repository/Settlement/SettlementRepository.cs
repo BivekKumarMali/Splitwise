@@ -119,7 +119,7 @@ namespace Splitwise.Repository
                     (x.PayeeUserId == userId || x.PayUserId == userId)
                 ).ToList();
             var listOfFriend = ListOfFriendByUserID(userId);
-            return from s in listofSettlement
+            /*return from s in listofSettlement
                    join f in listOfFriend
                    on 
                    select new SettlementDTO
@@ -128,7 +128,8 @@ namespace Splitwise.Repository
                        Amount = s.Amount,
                        PayeeName = userId == s.PayUserId ? "You" : friendDetails.Name,
                        ReceiverName = userId == s.PayeeUserId ? "You" : friendDetails.Name
-                   };
+                   };*/
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -11,8 +11,8 @@
  */
 
 
-export interface Friend { 
-    id?: number;
-    userId?: string;
-    friendId?: string;
+export interface Friend {
+  id?: number;
+  userId?: string;
+  friendId?: string;
 }

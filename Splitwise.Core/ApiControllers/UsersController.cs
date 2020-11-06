@@ -54,7 +54,7 @@ namespace Splitwise.Core.ApiControllers
         [HttpPost]
         public IActionResult Register(ApplicationUser user)
         {
-            if (user != null)
+            if (user != null && !_userRepository.UserExistByMail(user.Email))
             {
                 _userRepository.AddApplicationUser(user);
                 return Ok();

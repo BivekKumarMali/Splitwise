@@ -5,7 +5,7 @@
   height: 500px;
   background-color: var(--primary-color);
 }
-.userheader {
+.header {
   background-color: var(--pale-primary-color);
   width: 100%;
   height: 100%;

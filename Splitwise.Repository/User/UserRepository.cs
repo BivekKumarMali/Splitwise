@@ -120,6 +120,12 @@ namespace Splitwise.Repository
         {
             return _dbContext.ApplicationUsers.Find(userid) != null;
         }
+        public bool UserExistByMail(string email)
+        {
+            return _dbContext.ApplicationUsers.FirstOrDefault(x => x.Email == email) != null;
+        }
+
+
 
         public async Task<bool> UserValidation(string email, string password)
         {
@@ -138,7 +144,7 @@ namespace Splitwise.Repository
                            Name = u.Name,
                            Email = u.Email
                        };
-            if (user == null)
+            if (user.ToList().Count == 0)
             {
                 return from u in _dbContext.ApplicationUsers.ToList()
                        select new UserDTO
