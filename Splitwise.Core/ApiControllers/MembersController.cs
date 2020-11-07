@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Splitwise.DomainModel.Models;
@@ -35,7 +36,7 @@ namespace Splitwise.Core.ApiControllers
         #region Public methods
         //GET : api/Members
         [HttpGet]
-        public IActionResult Get(int groupid)
+        public ActionResult<IEnumerable<MemberDTO>> GetMembers(int groupid)
         {
             if (_groupRepository.GroupExist(groupid))
             {
@@ -48,7 +49,7 @@ namespace Splitwise.Core.ApiControllers
         //GET : api/Members
         [Route("Balance")]
         [HttpGet]
-        public IActionResult GetWithBalance(int groupid)
+        public ActionResult<IEnumerable<MemberDTO>> GetMemberWithBalance(int groupid)
         {
             if (_groupRepository.GroupExist(groupid))
             {
@@ -61,11 +62,11 @@ namespace Splitwise.Core.ApiControllers
 
         //POST : api/Members
         [HttpPost]
-        public IActionResult Add(Member member)
+        public IActionResult AddMember(Member member)
         {
             if (member != null)
             {
-                if (_memberRepository.memberExist(member))
+                if (!_memberRepository.memberExist(member))
                 {
                     _memberRepository.AddMember(member);
                     return Ok();
@@ -75,10 +76,23 @@ namespace Splitwise.Core.ApiControllers
             return NotFound();
 
         }
+        //POST : api/Members/bulk
+        [Route("Bulk")]
+        [HttpPost]
+        public IActionResult AddMemberInBulk(Member[] member)
+        {
+            if (member.Count() != 0)
+            {
+                    _memberRepository.AddMemberInBulk(member);
+                    return Ok();
+            }
+            return BadRequest();
+
+        }
 
         //DELTE : api/Members
         [HttpDelete]
-        public IActionResult Delete(int memberId)
+        public IActionResult DeleteMember(int memberId)
         {
             if (memberId > 0)
             {

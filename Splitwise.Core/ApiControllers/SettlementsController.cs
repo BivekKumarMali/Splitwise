@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Splitwise.Repository.DTOs;
 using Splitwise.Repository;
 using Splitwise.DomainModel.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Splitwise.Core.ApiControllers
 {
@@ -38,7 +35,7 @@ namespace Splitwise.Core.ApiControllers
 
         //GET : api/Settlement
         [HttpGet]
-        public IActionResult GetByGroupId(int groupid)
+        public ActionResult<IEnumerable<SettlementDTO>> GetSettlementByGroupId(int groupid)
         {
             if (_groupRepository.GroupExist(groupid))
             {
@@ -50,7 +47,7 @@ namespace Splitwise.Core.ApiControllers
 
         //POST : api/Settlement
         [HttpPost]
-        public IActionResult Add(Settlement settlement)
+        public IActionResult AddSettlement(Settlement settlement)
         {
             if (_groupRepository.GroupExist(settlement.GroupId))
             {
@@ -63,7 +60,7 @@ namespace Splitwise.Core.ApiControllers
 
         //DELETE : api/Settlement
         [HttpDelete]
-        public IActionResult Delete(long id)
+        public IActionResult DeleteSettlement(long id)
         {
             if (_settlementRepository.SettlementExists(id))
             {
@@ -75,9 +72,9 @@ namespace Splitwise.Core.ApiControllers
         }
 
         //GET : api/Setlement/{userid}
-        [Route("")]
+        [Route("ByUserId")]
         [HttpGet]
-        public IActionResult GetByUserID(string userId)
+        public ActionResult<IEnumerable<SettlementDTO>> GetSettlementByUserID(string userId)
         {
             if (_userRepository.UserExist(userId))
             {

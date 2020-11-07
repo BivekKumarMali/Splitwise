@@ -3,6 +3,7 @@ using Splitwise.DomainModel.Models;
 using Splitwise.Repository.DTOs;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 
@@ -61,7 +62,7 @@ namespace Splitwise.Repository
         public void DeleteSettlement(long id)
         {
             Settlement settlement = _dbContext.Settlements.Find(id);
-            _dbContext.Settlements.Add(settlement);
+            _dbContext.Settlements.Remove(settlement);
             _dbContext.SaveChanges();
         }
 
@@ -114,21 +115,20 @@ namespace Splitwise.Repository
 
         public IEnumerable<SettlementDTO> AllTransaction(string userId)
         {
-            var listofSettlement = _dbContext.Settlements.Where
-                (x =>
-                    (x.PayeeUserId == userId || x.PayUserId == userId)
-                ).ToList();
-            var listOfFriend = ListOfFriendByUserID(userId);
-            /*return from s in listofSettlement
-                   join f in listOfFriend
-                   on 
+
+            return from s in _dbContext.Settlements.ToList()
+                   join pay in _dbContext.ApplicationUsers.ToList()
+                   on s.PayUserId equals pay.UserId
+                   join payee in _dbContext.ApplicationUsers.ToList()
+                   on s.PayeeUserId equals payee.UserId
                    select new SettlementDTO
                    {
-                       Id = s.Id,
                        Amount = s.Amount,
-                       PayeeName = userId == s.PayUserId ? "You" : friendDetails.Name,
-                       ReceiverName = userId == s.PayeeUserId ? "You" : friendDetails.Name
-                   };*/
+                       Id = s.Id,
+                       PayeeName = userId == pay.UserId ? "You" : pay.Name,
+                       ReceiverName = userId == payee.UserId ? "You" : payee.Name,
+                   };
+
             throw new NotImplementedException();
         }
         #endregion

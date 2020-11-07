@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Splitwise.DomainModel.Models;
@@ -42,7 +43,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         //GET : api/Expenses
         [HttpGet]
-        public IActionResult GetByGroupID(int groupId)
+        public ActionResult<IEnumerable<ExpenseDTO>> GetExpenseByGroupID(int groupId)
         {
             if (_groupRepository.GroupExist(groupId))
             {
@@ -51,9 +52,39 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
             return NotFound();
 
         }
+
+
+        // GET : api/Expenses/userid
+        [Route("ByUserID")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ExpenseDTO>> GetExpenseByUserID(string userid)
+        {
+            if (_userRepository.UserExist(userid))
+            {
+                return Ok(_expenseRepository.ExpenseByUserID(userid));
+            }
+            return NotFound();
+
+        }
+
+
+        // GET : api/Expenses/userid
+        [Route("ByFriend")]
+        [HttpGet]
+        public ActionResult<IEnumerable<ExpenseDTO>> GetExpenseByFriend(Friend friend)
+        {
+            if (_userRepository.UserExist(friend.UserId))
+            {
+                return Ok(_expenseRepository.ExpenseByFriend(friend));
+            }
+            return NotFound();
+
+        }
+
+
         //POST : api/Expenses
         [HttpPost]
-        public IActionResult Add(Expense expense)
+        public IActionResult AddExpense(Expense expense)
         {
             if (_groupRepository.GroupExist(expense.GroupId))
             {
@@ -65,7 +96,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         }
         //PUT : api/Expenses
         [HttpPut]
-        public IActionResult Edit(Expense expense)
+        public IActionResult EditExpense(Expense expense)
         {
             if (_expenseRepository.ExpenseExist(expense.Id))
             {
@@ -78,7 +109,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         //DELETE : api/Expenses
         [HttpDelete]
-        public IActionResult Delete(long expenseId)
+        public IActionResult DeleteExpense(long expenseId)
         {
             if (_expenseRepository.ExpenseExist(expenseId))
             {
@@ -89,18 +120,6 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         }
 
-        /*GET : api/Expenses/userid
-        [Route("ByUserID/{userid}")]
-        [HttpGet("{userid}")]
-        public IActionResult GetByUserID(string userid)
-        {
-            if (_userRepository.UserExist(userid))
-            {
-                return Ok(_expenseRepository.ExpenseByUserID(userid));
-            }
-            return NotFound();
-
-        }*/
 
         // GET : api/Expenses/ExpenseDetails/1
         [Route("ExpenseDetails")]
@@ -118,7 +137,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         //POST : api/Expenses/ExpenseDetails
         [Route("ExpenseDetails")]
         [HttpPost]
-        public IActionResult AddDetails(ExpenseDetail[] expenseDetails)
+        public IActionResult AddExpenseDetails(ExpenseDetail[] expenseDetails)
         {
             //ExpenseDetail[] expenseDetails = _expenseDetailRepository.JsonToExpenseDetails(jsonExpenseDetail);
             if (_expenseRepository.ExpenseExist(expenseDetails[0].ExpenseId))
@@ -132,7 +151,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         //PUT : api/Expenses/ExpenseDetails
         [Route("ExpenseDetails")]
         [HttpPut]
-        public IActionResult EditDetails(string jsonExpenseDetail)
+        public IActionResult EditExpenseDetails(string jsonExpenseDetail)
         {
             ExpenseDetail[] expenseDetails = _expenseDetailRepository.JsonToExpenseDetails(jsonExpenseDetail);
             if (_expenseRepository.ExpenseExist(expenseDetails[0].ExpenseId))

@@ -6,7 +6,7 @@
     <li *ngFor="let item of Friends">{{item.name}}</li>
   </ul>
   <hr class="dark">
-  <a (click)="displayGroupFrom()">Add Group <i class=" fa fa-plus"></i></a>
+  <a [routerLink]="['/home/addgroup']">Add Group <i class=" fa fa-plus"></i></a>
   <hr class="light">
   <ul>
     <li class="btn" *ngFor="let item of groupNames" [routerLink]="['/home/group', item.id]"
@@ -18,36 +18,6 @@
   <hr class="dark">
   <a [routerLink]="['/home/transaction']" routerLinkActive="router-link-active">All Transaction</a>
   <hr class="dark">
-</div>
-<div class="GroupFormOverlay" [ngClass]="activeGroup">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="ElementGroupForm shadow p-3 mb-5 bg-white rounded">
-          <div class="header title">
-            <i class="fa fa-edit"> {{pagetitle}} Group</i>
-            <a class="float-right up" (click)="displayGroupFrom()"><i class="fa fa-times"></i></a>
-            <div class="Editform">
-              <hr>
-              <form #groupForm="ngForm" (ngSubmit)="AddGroup(groupForm)" ngNativeValidate>
-                <div class="Addform ">
-                  <label for="name">Group Name :-</label>
-                  <input type="text" class="form-control" name="name" placeholder="Enter Group Name" id="name" required
-                    [(ngModel)]="group.groupName">
-                </div>
-                <div class="buttonform">
-                  <button type="submit" class="btn btn-primary">Add</button>
-                  <button type="reset" class="btn btn-danger" (click)="displayGroupFrom()">Cancel</button>
-                </div>
-
-              </form>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <div class="FriendFormOverlay" [ngClass]="activeFriend">
   <div class="container">

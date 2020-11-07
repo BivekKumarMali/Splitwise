@@ -91,6 +91,47 @@ namespace Splitwise.Repository
                 (x.FriendId == friendId && x.UserId == userId)
                 ) == null;
         }
+
+        public IEnumerable<FriendDTO> AllFriendWithBalance(string userId)
+        {
+            var OweExpenseDetail = from ed in _dbContext.ExpenseDetails.ToList()
+                                   where ed.UserId == userId & ed.AmountPaid - ed.AmountOwe < 0
+                                   select new
+                                   {
+                                       expenseId = ed.ExpenseId,
+                                       amount = ed.AmountPaid - ed.AmountOwe
+                                   };
+            var ListOfPeopleToBePaid = from oed in OweExpenseDetail
+                                       join ed in _dbContext.ExpenseDetails.ToList()
+                                       on oed.expenseId equals ed.ExpenseId
+                                       join u in _dbContext.ApplicationUsers.ToList()
+                                       on ed.UserId equals u.UserId
+                                       select new FriendDTO
+                                       {
+                                           Amount = oed.amount,
+                                           Id = ed.UserId,
+                                           Name = u.Name
+                                       };
+            var OwedExpenseDetail = from ed in _dbContext.ExpenseDetails.ToList()
+                                   where ed.UserId == userId & ed.AmountPaid - ed.AmountOwe > 0
+                                   select new
+                                   {
+                                       expenseId = ed.ExpenseId,
+                                       amount = ed.AmountPaid - ed.AmountOwe
+                                   };
+            var ListOfPeopleToGetPaid = from oed in OwedExpenseDetail
+                                       join ed in _dbContext.ExpenseDetails.ToList()
+                                       on oed.expenseId equals ed.ExpenseId
+                                       join u in _dbContext.ApplicationUsers.ToList()
+                                       on ed.UserId equals u.UserId
+                                       select new FriendDTO
+                                       {
+                                           Amount = ed.AmountPaid - ed.AmountOwe,
+                                           Id = ed.UserId,
+                                           Name = u.Name
+                                       };
+            return ListOfPeopleToBePaid.Concat(ListOfPeopleToGetPaid);
+        }
         #endregion
     }
 }

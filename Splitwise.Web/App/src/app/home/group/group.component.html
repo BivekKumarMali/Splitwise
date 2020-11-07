@@ -1,9 +1,10 @@
-<div class="container">
+<div class="container" *ngIf="Group">
   <div class="row">
     <div class="col-md-12">
       <div class="box">
         <div class="box-header">
-          <h5>Group Name</h5>
+          <h5>{{Group.groupName}}</h5>
+          <p style="font-size: 10px;">BY {{Group.userName}}</p>
           <div class="box-button">
             <button class="btn btn-primary" (click)="displayExpenseFrom()">Add Expense</button>
             <button class="btn btn-warning" (click)="displaySettlementFrom()">Settle Up</button>
@@ -54,11 +55,18 @@
             <a class="float-right up" (click)="displaySettlementFrom()"><i class="fa fa-times"></i></a>
             <div class="Editform">
               <hr>
-              <form #form="ngForm" (ngSubmit)="AddSettlement(form)" ngNativeValidate>
+              <form #settlementForm="ngForm" (ngSubmit)="AddSettlement(settlementForm)" ngNativeValidate>
                 <div class="Addform">
-                  <label for="member">Members :-</label>
-                  <select id="member" class="form-control" name="member" required ngModel #memberId="ngModel">
-                    <option [value]="item.id" *ngFor="let item of Members">{{item.name}}</option>
+                  <label for="payUserID">Paid By :-</label>
+                  <select id="payUserID" class="form-control" name="payUserID" required ngModel #payUserID="ngModel">
+                    <option [value]="item.id" *ngFor="let item of MemberWithBalance">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class="Addform">
+                  <label for="payeeUserID">To :-</label>
+                  <select id="payeeUserID" class="form-control" name="payeeUserID" required ngModel
+                    #payeeUserID="ngModel">
+                    <option [value]="item.id" *ngFor="let item of MemberWithBalance">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="Addform ">
@@ -89,11 +97,11 @@
             <a class="float-right up" (click)="displayExpenseFrom()"><i class="fa fa-times"></i></a>
             <div class="Editform">
               <hr>
-              <form #form="ngForm" (ngSubmit)="AddSettlement(form)" ngNativeValidate>
+              <form #orm="ngForm" (ngSubmit)="AddSettlement(orm)" ngNativeValidate>
                 <div class="Addform">
                   <label for="member">Members :-</label>
                   <select id="member" class="form-control" name="member" required ngModel #memberId="ngModel">
-                    <option [value]="item.id" *ngFor="let item of Members">{{item.name}}</option>
+                    <option [value]="item.id" *ngFor="let item of MemberWithBalance">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="Addform ">
@@ -124,7 +132,8 @@
             <a class="float-right up" (click)="displayMemberFrom()"><i class="fa fa-times"></i></a>
             <div class="Editform">
               <hr>
-              <form #form="ngForm" (ngSubmit)="AddMember(form)" ngNativeValidate>
+              <form #memberForm="ngForm" (ngSubmit)="AddMember(memberForm)" ngNativeValidate>
+                <p class="text-danger" *ngIf="AddMemberError"> Member Already exist</p>
                 <p class="note">Add as friend before adding member</p>
                 <div class="Addform">
                   <label for="friend">Friends :-</label>

@@ -70,12 +70,43 @@ namespace Splitwise.Repository
 
         public IEnumerable<ExpenseDTO> ExpenseByUserID(string userid)
         {
-            throw new NotImplementedException();
+            return from e in _dbContext.Expenses.ToList()
+                   join ed in _dbContext.ExpenseDetails.ToList()
+                   on e.Id equals ed.ExpenseId
+                   where ed.UserId == userid
+                   select new ExpenseDTO
+                   {
+                       Id = e.Id,
+                       Amount = ed.AmountPaid - ed.AmountOwe,
+                       ExpenseName = e.ExpenseName,
+                       TimeStamp = e.TimeStamp.ToString(),
+                       UserName = "You"
+                   };
         }
 
         public bool ExpenseExist(long expenseId)
         {
             return _dbContext.Expenses.Find(expenseId) != null ? true : false;
+        }
+
+        public IEnumerable<ExpenseDTO> ExpenseByFriend(Friend friend)
+        {
+            return from userEd in _dbContext.ExpenseDetails.ToList()
+                   join friendEd in _dbContext.ExpenseDetails.ToList()
+                   on userEd.ExpenseId equals friendEd.ExpenseId
+                   join u in _dbContext.ApplicationUsers.ToList()
+                   on friendEd.UserId equals u.UserId
+                   join e in _dbContext.Expenses.ToList()
+                   on userEd.ExpenseId equals e.Id
+                   where userEd.UserId == friend.UserId & friendEd.UserId == friend.FriendId
+                   select new ExpenseDTO
+                   {
+                       Id = e.Id,
+                       Amount = friendEd.AmountPaid - friendEd.AmountOwe,
+                       ExpenseName = e.ExpenseName,
+                       TimeStamp = e.TimeStamp.ToString(),
+                       UserName = u.Name
+                   };
         }
         #endregion
     }

@@ -42,10 +42,11 @@ namespace Splitwise.Repository
 
         }
 
-        public void AddGroup(DomainModel.Models.Group group)
+        public int AddGroup(DomainModel.Models.Group group)
         {
             _dbContext.Groups.Add(group);
             _dbContext.SaveChanges();
+            return group.Id;
         }
 
         public void UpdateGroup(DomainModel.Models.Group group)
@@ -64,6 +65,18 @@ namespace Splitwise.Repository
         public bool GroupExist(int groupId)
         {
             return _dbContext.Groups.Find(groupId) != null ? true : false;
+        }
+
+        public GroupDTO GroupById(int groupid)
+        {
+            var group = _dbContext.Groups.Find(groupid);
+            var user = _dbContext.ApplicationUsers.Find(group.UserId);
+            return new GroupDTO
+            {
+                GroupName = group.GroupName,
+                Id = group.Id,
+                UserName = user.Name
+            };
         }
 
         #endregion

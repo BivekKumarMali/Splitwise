@@ -49,16 +49,16 @@ namespace Splitwise.Repository
         {
             var listOfSettlement = _dbContext.Settlements.Where(x => x.GroupId == groupId).ToList();
 
-            var listOfGroupMember = from u in _dbContext.ApplicationUsers
-                                    join m in _dbContext.Members
-                                    on u.UserId equals m.UserId
+            var listOfGroupMember = from m in _dbContext.Members
+                                    join u in _dbContext.ApplicationUsers
+                                    on m.UserId equals u.UserId
                                     where m.GroupId == groupId
                                     select new UserDTO
                                     {
                                         Id = u.UserId,
                                         Name = u.Name
                                     };
-
+            var list = _dbContext.Members.Where(x => x.GroupId == groupId).ToList();
             var IQuerybalanceOfEachUser = from e in _dbContext.Expenses
                                   join ed in _dbContext.ExpenseDetails
                                   on e.Id equals ed.ExpenseId
@@ -117,6 +117,22 @@ namespace Splitwise.Repository
         public bool memberExist(Member member)
         {
             return _dbContext.Members.First(x => x.GroupId == member.GroupId && x.UserId == member.UserId) != null ? true : false;
+        }
+
+        public void AddMemberInBulk(Member[] member)
+        {
+            foreach (var item in member)
+            {
+                if (!memberExist(item))
+                {
+                    member = member.Where(x => x != item).ToArray();
+                }
+            }
+            if (member.Count() != 0)
+            {
+                _dbContext.Members.AddRange(member);
+                _dbContext.SaveChanges();
+            }
         }
         #endregion
     }

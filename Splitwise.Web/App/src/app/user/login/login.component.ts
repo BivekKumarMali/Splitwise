@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsersService } from 'src/app/core/api/setup/api';
-import { Login } from 'src/app/model/login';
+import { Login, UsersClient } from 'src/app/core/api/splitwiseAPI';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UsersService
+    private splitwiseService: UsersClient
   ) { }
 
   ngOnInit(): void {
@@ -27,8 +26,8 @@ export class LoginComponent implements OnInit {
 
   Login(form: NgForm) {
     this.login = form.value;
-    this.userService.login(this.login).subscribe({
-      next: token => this.SetToken(token),
+    this.splitwiseService.login(this.login).subscribe({
+      next: (token) => this.SetToken(token.data),
       error: err => this.errormessage = err,
       complete: () => this.RouteToHome()
     });
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   SetToken(objectToken: any) {
     console.log(objectToken);
-    localStorage.setItem('token', JSON.stringify(objectToken));
+    localStorage.setItem('token', objectToken.token);
     const token = objectToken.token;
     const jwtData = token.split('.')[1];
     const decodedJwtJsonData = window.atob(jwtData);

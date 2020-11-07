@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendDTO } from 'src/app/model/models';
+import { FriendDTO } from 'src/app/core/api/splitwiseAPI';
 
 @Component({
   selector: 'app-dashboard',

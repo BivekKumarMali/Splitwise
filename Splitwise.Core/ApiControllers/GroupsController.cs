@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Splitwise.DomainModel.Models;
@@ -36,7 +37,7 @@ namespace Splitwise.Core.ApiControllers
 
         // GET: api/Groups
         [HttpGet]
-        public virtual IActionResult Groups(string userId)
+        public virtual ActionResult<IEnumerable<GroupDTO>> GetGroups(string userId)
         {
             if (_userRepository.UserExist(userId))
             {
@@ -48,15 +49,28 @@ namespace Splitwise.Core.ApiControllers
             }
 
         }
+        [Route("ByID")]
+        [HttpGet]
+        public virtual ActionResult<GroupDTO> GetGroupById(int groupid)
+        {
+            if (_groupRepository.GroupExist(groupid))
+            {
+                return _groupRepository.GroupById(groupid);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
 
         // POST: api/Groups
         [HttpPost]
-        public virtual IActionResult Add(Group group)
+        public ActionResult<int> AddGroup(Group group)
         {
             if (group != null)
             {
-                _groupRepository.AddGroup(group);
-                return Ok();
+                return Ok(_groupRepository.AddGroup(group));
             }
             else
             {
@@ -67,7 +81,7 @@ namespace Splitwise.Core.ApiControllers
 
         // PUT: api/Groups
         [HttpPut]
-        public virtual IActionResult Edit(Group group)
+        public virtual IActionResult EditGroup(Group group)
         {
             if (group != null)
             {
@@ -82,8 +96,8 @@ namespace Splitwise.Core.ApiControllers
         }
 
         // DELETE: api/Groups
-        [HttpDelete("{groupId}")]
-        public virtual IActionResult Delete(int groupId)
+        [HttpDelete]
+        public virtual IActionResult DeleteGroup(int groupId)
         {
             if (_groupRepository.GroupExist(groupId))
             {

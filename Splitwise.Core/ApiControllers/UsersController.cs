@@ -36,7 +36,7 @@ namespace Splitwise.Core.ApiControllers
 
         // PUT: api/Users
         [HttpPut]
-        public virtual IActionResult Edit(ApplicationUser user)
+        public virtual IActionResult EditUser(ApplicationUser user)
         {
             if (user != null)
             {
@@ -86,7 +86,7 @@ namespace Splitwise.Core.ApiControllers
         // GET: api/Users/ByMail
         [HttpGet("{mail}")]
         [Route("ByMail/{mail}")]
-        public IActionResult ByMail(string mail)
+        public ActionResult<IEnumerable<UserDTO>> UsersByMail(string mail)
         {
             var user = _userRepository.FindByMail(mail);
             if (user != null)
@@ -128,7 +128,7 @@ namespace Splitwise.Core.ApiControllers
         // GET: api/Users/Friends/userid
         [HttpGet]
         [Route("Friends")]
-        public IActionResult GetFriends(string userid)
+        public ActionResult<IEnumerable<FriendDTO>> GetFriends(string userid)
         {
             if (_userRepository.UserExist(userid))
             {
@@ -136,6 +136,17 @@ namespace Splitwise.Core.ApiControllers
             }
             return NotFound();
 
+        }
+
+        [HttpGet]
+        [Route("FriendBalance")]
+        public IActionResult GetFriendWithBalance(string userId) 
+        {
+            if (_userRepository.UserExist(userId))
+            {
+                return Ok(_friendRepository.AllFriendWithBalance(userId));
+            }
+            return NotFound();
         }
         #endregion
     }

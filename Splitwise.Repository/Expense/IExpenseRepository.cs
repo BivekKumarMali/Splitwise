@@ -14,5 +14,6 @@ namespace Splitwise.Repository
         void Delete(long expenseId);
         IEnumerable<T> ExpenseByUserID(string userid);
         bool ExpenseExist(long expenseId);
+        IEnumerable<ExpenseDTO> ExpenseByFriend(Friend friend);
     }
 }

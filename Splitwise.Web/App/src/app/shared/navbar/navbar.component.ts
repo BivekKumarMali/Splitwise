@@ -1,3 +1,4 @@
+import { tokenName } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -18,5 +19,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  LogOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
+  }
 
 }

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>Add Group</h5>
+        </div>
+        <div class="box-middle">
+          <form #groupForm="ngForm" (ngSubmit)="AddGroup(groupForm)" ngNativeValidate>
+            <div class="Addform ">
+              <label for="name">Group Name :-</label>
+              <input type="text" class="form-control" name="groupName" placeholder="Enter Group Name" id="name" required
+                #groupName="ngModel" ngModel>
+            </div>
+            <div class="buttonform">
+              <a class="btn btn-warning" (click)="fetchFriends()">Add Members</a>
+            </div>
+            <div class="Addfrom" *ngIf="ShowAddMembers">
+              <label *ngFor="let item of Friends; index as i;">
+                <input type="checkbox" [value]="item.id" name="userid" (change)="AddUserID($event, i)">{{item.name}}
+              </label>
+            </div>
+            <div class="buttonform">
+              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="reset" class="btn btn-danger" [routerLink]="['/home']">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

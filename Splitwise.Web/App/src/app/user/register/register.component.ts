@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsersService } from 'src/app/core/api/setup/api';
-import { User } from 'src/app/model/user';
+import { ApplicationUser, UsersClient } from 'src/app/core/api/splitwiseAPI';
 
 @Component({
   selector: 'app-register',
@@ -12,12 +11,12 @@ import { User } from 'src/app/model/user';
 export class RegisterComponent implements OnInit {
 
 
-  User: User;
+  User: ApplicationUser;
   errorMessage: any;
 
   constructor(
     private router: Router,
-    private userService: UsersService
+    private userService: UsersClient
   ) { }
 
   ngOnInit(): void {
