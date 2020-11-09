@@ -30,10 +30,11 @@ namespace Splitwise.Repository
         #endregion
 
         #region Public methods
-        public void AddExpense(Expense expense)
+        public long AddExpense(Expense expense)
         {
             _dbContext.Expenses.Add(expense);
             _dbContext.SaveChanges();
+            return expense.Id;
         }
 
         public void Delete(long expenseId)
@@ -95,7 +96,7 @@ namespace Splitwise.Repository
                    join friendEd in _dbContext.ExpenseDetails.ToList()
                    on userEd.ExpenseId equals friendEd.ExpenseId
                    join u in _dbContext.ApplicationUsers.ToList()
-                   on friendEd.UserId equals u.UserId
+                   on userEd.UserId equals u.UserId
                    join e in _dbContext.Expenses.ToList()
                    on userEd.ExpenseId equals e.Id
                    where userEd.UserId == friend.UserId & friendEd.UserId == friend.FriendId

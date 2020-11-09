@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>Expense Detail</h5>
+        </div>
+        <div class="box-middle">
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Amount Paid</th>
+                  <th scope="col">Amount owe</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of ExpenseDetails">
+                  <th scope="row">1</th>
+                  <td>{{item.userName}}</td>
+                  <td>{{item.amountPaid}}</td>
+                  <td>{{item.amountOwed}}</td>
+                </tr>
+                <tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

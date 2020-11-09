@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>Add Group</h5>
+        </div>
+        <div class="box-middle">
+          <form #form="ngForm" (ngSubmit)="SetUpExpense(form)" ngNativeValidate>
+            <p class="text-danger" *ngIf="ShowMessage">{{ShowMessage}}</p>
+
+            <div class="Addform">
+              <label for="group">Groups</label>
+              <select name="group" id="group" class="form-control" disabled>
+                <option>{{GroupName}}</option>
+              </select>
+            </div>
+
+            <div class="Addform">
+              <label for="name">Name</label>
+              <input class="form-control" type="text" name="name" id="name" ngModel #name="ngModel" required>
+            </div>
+
+            <div class="Addform">
+              <label for="checkbox">Multiple People</label>
+              <input type="checkbox" name="checkbox" id="checkbox" (change)="ActivateMultiplePeople($event)">
+            </div>
+            <div class="Addform" *ngIf="!IsMultiplePeople">
+              <label for="paidBy">Paid By</label>
+              <select class="form-control" name="paidBy" id="paidBy" ngModel #paidBy="ngModel" required>
+                <option *ngFor="let item of Members" [value]="item.id">{{item.name}}</option>
+              </select>
+              <label for="amount"></label>
+              <input class="form-control" step="any" type="number" name="amount" id="amount" #amount="ngModel" ngModel
+                (change)="AddSingleToPaidBy(form,$event)" required>
+            </div>
+            <div class="" *ngIf="IsMultiplePeople">
+              <label>Paid By <span class="note">Leave empty if dont want to add</span> </label>
+              <div class="Addform" *ngFor="let item of Members">
+                <label for="people">{{item.name}}</label>
+                <input step="any" type="number" class="form-control" name="amount"
+                  (change)="AddToPaidBy(item.id, $event)">
+              </div>
+            </div>
+            <div class="Addform ">
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="equally" name="payee" checked
+                  (change)="PayeeList($event)">
+                <label class="custom-control-label" for="equally">Equally</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="percentage" name="payee"
+                  (change)="PayeeList($event)">
+                <label class="custom-control-label" for="percentage">Percentage</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="custom" name="payee" (change)="PayeeList($event)">
+                <label class="custom-control-label" for="custom">Custom</label>
+              </div>
+            </div>
+            <div *ngIf="ShowPercentage">
+              <label>To Be Paid By <span class="note">Leave empty if dont want to add</span> </label>
+              <div class="Addform" *ngFor="let item of Members">
+                <label for="people">{{item.name}}</label>
+                <input step="any" type="number" class="form-control" name="amount"
+                  (change)="AddToBePaidByPercentage(item.id, $event)">
+              </div>
+            </div>
+            <div class="" *ngIf="ShowCustom">
+              <label>To Be Paid By <span class="note">Leave empty if dont want to add</span> </label>
+              <div class="Addform" *ngFor="let item of Members">
+                <label for="people">{{item.name}}</label>
+                <input step="any" type="number" class="form-control" name="amount"
+                  (change)="AddToBePaidByCustom(item.id, $event)">
+              </div>
+            </div>
+            <div class="buttonform">
+              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="reset" class="btn btn-danger" [routerLink]="['/home']">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

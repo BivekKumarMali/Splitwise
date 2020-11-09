@@ -9,7 +9,7 @@ namespace Splitwise.Repository
     public interface IExpenseRepository<T> where T: ExpenseDTO
     {
         IEnumerable<T> ExpenseByGroupId(int groupId);
-        void AddExpense(Expense expense);
+        long AddExpense(Expense expense);
         void EditExpense(Expense expense);
         void Delete(long expenseId);
         IEnumerable<T> ExpenseByUserID(string userid);

@@ -71,8 +71,10 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         // GET : api/Expenses/userid
         [Route("ByFriend")]
         [HttpGet]
-        public ActionResult<IEnumerable<ExpenseDTO>> GetExpenseByFriend(Friend friend)
+        public ActionResult<IEnumerable<ExpenseDTO>> GetExpenseByFriend(string ufid)
         {
+            var ids = ufid.Split(' ');
+            Friend friend = new Friend { Id = 0, UserId = ids[0], FriendId = ids[1] };
             if (_userRepository.UserExist(friend.UserId))
             {
                 return Ok(_expenseRepository.ExpenseByFriend(friend));
@@ -84,12 +86,11 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
 
         //POST : api/Expenses
         [HttpPost]
-        public IActionResult AddExpense(Expense expense)
+        public ActionResult<long> AddExpense(Expense expense)
         {
             if (_groupRepository.GroupExist(expense.GroupId))
             {
-                _expenseRepository.AddExpense(expense);
-                return Ok();
+                return _expenseRepository.AddExpense(expense);
             }
             return NotFound();
 
@@ -124,7 +125,7 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
         // GET : api/Expenses/ExpenseDetails/1
         [Route("ExpenseDetails")]
         [HttpGet]
-        public IActionResult GetExpenseDetail(long expenseid)
+        public ActionResult<IEnumerable<ExpenseDetailDTO>> GetExpenseDetail(long expenseid)
         {
             if (_expenseRepository.ExpenseExist(expenseid))
             {

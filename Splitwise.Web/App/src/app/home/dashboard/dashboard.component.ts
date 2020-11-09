@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendDTO } from 'src/app/core/api/splitwiseAPI';
+import { FriendDTO, UsersClient } from 'src/app/core/api/splitwiseAPI';
+import { UtilService } from 'src/app/core/util/util.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,9 +10,20 @@ import { FriendDTO } from 'src/app/core/api/splitwiseAPI';
 export class DashboardComponent implements OnInit {
 
   Friends: FriendDTO[];
-  constructor() { }
+  constructor(
+    private userService: UsersClient,
+    private utilService: UtilService
+  ) { }
 
   ngOnInit(): void {
+    const userid = this.utilService.GetUserID();
+    this.fetchFriend(userid);
+  }
+  fetchFriend(id: string) {
+    this.userService.getFriendWithBalance(id).subscribe({
+      next: data => this.Friends = data,
+      error: err => console.log(err),
+    });
   }
 
 }

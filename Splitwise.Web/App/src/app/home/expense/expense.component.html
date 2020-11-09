@@ -1,0 +1,20 @@
+<div class="container" *ngIf="Expenses">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>All Transaction</h5>
+        </div>
+        <div class="box-expense" *ngFor="let item of Expenses">
+          <div class="dates">
+            <p class="month">Oct</p>
+            <p class="date">{{item.timeStamp}}</p>
+          </div>
+          <p class="name">{{item.expenseName}}</p>
+          <p class="name"> <span class="note">Created By</span> {{item.userName}}</p>
+          <i class="delete fa fa-trash fa-2x" (click)="DeleteExpense(item.id)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,6 @@ namespace Splitwise.Repository.DTOs
         public long Id { get; set; }
         public string PayeeName { get; set; }
         public string ReceiverName { get; set; }
-        public long Amount { get; set; }
+        public decimal Amount { get; set; }
     }
 }

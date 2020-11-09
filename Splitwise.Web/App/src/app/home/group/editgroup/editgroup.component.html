@@ -1,1 +1,30 @@
-<p>editgroup works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>Edit Group</h5>
+        </div>
+        <div class="box-middle">
+          <form #groupForm="ngForm" (ngSubmit)="EditGroup()" ngNativeValidate>
+            <div class="Addform ">
+              <label for="name">Group Name :-</label>
+              <input type="text" class="form-control" name="groupName" placeholder="Enter Group Name" id="name" required
+                [(ngModel)]="GroupName">
+            </div>
+            <h6>Members</h6>
+            <div class="Addform" *ngFor="let item of Members">
+              <span>{{item.name}}</span>
+              <i class="fa fa-trash delete"> Later</i>
+            </div>
+            <div class="buttonform">
+              <button type="submit" class="btn btn-primary">Edit</button>
+              <button type="reset" class="btn btn-danger" [routerLink]="['/home']">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

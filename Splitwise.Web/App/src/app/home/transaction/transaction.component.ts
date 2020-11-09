@@ -20,6 +20,7 @@ export class TransactionComponent implements OnInit {
     const userId = this.utilService.GetUserID();
     this.fetchSettlementByUserId(userId);
   }
+
   fetchSettlementByUserId(userId: string) {
     this.settlementService.getSettlementByUserID(userId).subscribe({
       next: data => this.Settlements = data

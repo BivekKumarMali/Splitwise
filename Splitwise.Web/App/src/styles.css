@@ -17,11 +17,15 @@
   --minimal-color-2: #88dde0;
 }
 
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 .box {
   margin-top: 80px;
   margin-left: 145px;
   height: 88vh;
   min-width: 300px;
+  width: 100%;
   border-left: 1px solid var(--secondary-color);
   border-right: 1px solid var(--secondary-color);
   border-bottom: 1px solid var(--secondary-color);
@@ -70,6 +74,11 @@
 
 .box-expense {
   background-color: var(--minimal-color-2);
+  border-bottom: 1px solid var(--secondary-color);
+  cursor: pointer;
+}
+.box-expense:hover {
+  background-color: var(--minimal-color);
 }
 .box-expense i,
 .box-expense p,

@@ -1,0 +1,39 @@
+.box-button button {
+  margin-left: 10px;
+}
+.col-md-12 {
+  display: flex;
+}
+.box-members {
+  margin-top: 130px;
+  height: 88vh;
+  border-right: 1px solid var(--secondary-color);
+  border-top: 1px solid var(--secondary-color);
+}
+.box-members .box-member-details {
+  display: flex;
+}
+.box-member-details {
+  font-size: 20px;
+}
+.member-detail {
+  display: flex;
+  flex-direction: column;
+}
+.member-detail .memberAmount {
+  margin: 0;
+}
+.memberName {
+  font-size: 10px;
+  margin: 0;
+}
+.note {
+  margin: 0;
+  font-size: 8px;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}

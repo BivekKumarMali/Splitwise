@@ -72,7 +72,7 @@ namespace Splitwise.Repository
             List<MemberDTO> memberDTOs = new List<MemberDTO>();
             foreach (var member in listOfGroupMember)
             {
-                List<long> listOfUserBalance = (from num in balanceOfEachUser where num.Id == member.Id
+                List<decimal> listOfUserBalance = (from num in balanceOfEachUser where num.Id == member.Id
                                    select num.Amount).ToList();
 
                 var userBalance = listOfUserBalance.Sum();

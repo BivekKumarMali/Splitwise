@@ -140,7 +140,7 @@ namespace Splitwise.Core.ApiControllers
 
         [HttpGet]
         [Route("FriendBalance")]
-        public IActionResult GetFriendWithBalance(string userId) 
+        public ActionResult<IEnumerable<FriendDTO>> GetFriendWithBalance(string userId) 
         {
             if (_userRepository.UserExist(userId))
             {

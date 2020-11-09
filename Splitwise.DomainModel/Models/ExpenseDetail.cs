@@ -12,9 +12,9 @@ namespace Splitwise.DomainModel.Models
         [Key]
         public long Id { get; set; }
 
-        public long AmountOwe { get; set; }
+        public decimal AmountOwe { get; set; }
 
-        public long AmountPaid { get; set; }
+        public decimal AmountPaid { get; set; }
 
         public string UserId { get; set; }
         [ForeignKey("UserId")]

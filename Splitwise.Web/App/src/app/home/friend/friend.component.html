@@ -1,1 +1,33 @@
-<p>friend works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box">
+        <div class="box-header">
+          <h5>{{Name}}</h5>
+          <h6>{{Amount}}</h6>
+          <div class="box-button">
+            <button class="btn btn-primary" (click)="displaySettlementFrom()">Settle up</button>
+          </div>
+        </div>
+        <div class="box-middle" *ngFor="let item of Settlements">
+          <i class="fa fa-bitcoin fa-2x"></i>
+          <div class="settlement-detail">
+            <span class="name">{{item.payeeName}}</span>
+            <span> paid</span>
+            <span class="name"> {{item.receiverName}}</span>
+            <span class="amount"> {{item.amount}} ₹</span>
+          </div>
+          <i class="delete fa fa-trash fa-2x" (click)="DeleteSettlement(item.id)"></i>
+        </div>
+        <div class="box-expense" *ngFor="let item of Expenses">
+          <div class="dates">
+            <p class="month">Oct</p>
+            <p class="date">{{item.timeStamp}}</p>
+          </div>
+          <p class="name">{{item.expenseName}}</p>
+          <p class="name">Created By {{item.userName}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

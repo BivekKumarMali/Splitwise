@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddgroupComponent } from './group/addgroup/addgroup.component';
 import { EditgroupComponent } from './group/editgroup/editgroup.component';
+import { AddexpenseComponent } from './expense/addexpense/addexpense.component';
+import { ExpensedetailComponent } from './expense/expensedetail/expensedetail.component';
+import { EditexpenseComponent } from './expense/editexpense/editexpense.component';
 
 
 
@@ -23,7 +26,10 @@ import { EditgroupComponent } from './group/editgroup/editgroup.component';
     FriendComponent,
     DashboardComponent,
     AddgroupComponent,
-    EditgroupComponent],
+    EditgroupComponent,
+    AddexpenseComponent,
+    ExpensedetailComponent,
+    EditexpenseComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -32,8 +38,10 @@ import { EditgroupComponent } from './group/editgroup/editgroup.component';
     RouterModule.forChild([
       { path: 'dashboard', component: DashboardComponent },
       { path: '', redirectTo: 'dashboard' },
-      { path: 'friend', component: FriendComponent },
+      { path: 'friend/:id', component: FriendComponent },
       { path: 'expense', component: ExpenseComponent },
+      { path: 'expense/:expenseid', component: ExpensedetailComponent },
+      { path: 'addexpense/:groupId', component: AddexpenseComponent },
       { path: 'group/:groupId', component: GroupComponent },
       { path: 'addgroup', component: AddgroupComponent },
       { path: 'editgroup/:groupId', component: EditgroupComponent },

@@ -1,9 +1,12 @@
-﻿using Splitwise.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Splitwise.Data;
 using Splitwise.DomainModel.Models;
 using Splitwise.Repository.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -106,10 +109,10 @@ namespace Splitwise.Repository
                                        on oed.expenseId equals ed.ExpenseId
                                        join u in _dbContext.ApplicationUsers.ToList()
                                        on ed.UserId equals u.UserId
+                                       where ed.AmountPaid - ed.AmountOwe >0
                                        select new FriendDTO
                                        {
-                                           Amount = oed.amount,
-                                           Id = ed.UserId,
+                                           Amount = oed.amount * -1,
                                            Name = u.Name
                                        };
             var OwedExpenseDetail = from ed in _dbContext.ExpenseDetails.ToList()
@@ -117,6 +120,7 @@ namespace Splitwise.Repository
                                    select new
                                    {
                                        expenseId = ed.ExpenseId,
+                                       userid = ed.UserId,
                                        amount = ed.AmountPaid - ed.AmountOwe
                                    };
             var ListOfPeopleToGetPaid = from oed in OwedExpenseDetail
@@ -124,13 +128,16 @@ namespace Splitwise.Repository
                                        on oed.expenseId equals ed.ExpenseId
                                        join u in _dbContext.ApplicationUsers.ToList()
                                        on ed.UserId equals u.UserId
+                                       where ed.UserId != oed.userid
                                        select new FriendDTO
                                        {
                                            Amount = ed.AmountPaid - ed.AmountOwe,
                                            Id = ed.UserId,
                                            Name = u.Name
                                        };
-            return ListOfPeopleToBePaid.Concat(ListOfPeopleToGetPaid);
+            var list = ListOfPeopleToBePaid.Concat(ListOfPeopleToGetPaid).ToList();
+            IList<FriendDTO> finalList = new List<FriendDTO>();
+            return list;
         }
         #endregion
     }

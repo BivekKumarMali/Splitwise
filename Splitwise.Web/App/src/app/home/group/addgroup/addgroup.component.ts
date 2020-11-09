@@ -33,7 +33,7 @@ export class AddgroupComponent implements OnInit {
     this.userService.getFriends(userId).subscribe({
       next: data => this.Friends = data,
       complete: () => this.ShowAddMembers = true
-    })
+    });
   }
   AddGroup(form: NgForm) {
     let id = 0;
@@ -45,12 +45,10 @@ export class AddgroupComponent implements OnInit {
       next: data => id = data,
       complete: () => this.AddMembers(id)
     });
-
-    this.AddMembers(5);
   }
 
   AddMembers(groupid: number) {
-    let Members = this.formBuilder.array([]);
+    const Members = this.formBuilder.array([]);
     this.MemberUserId.forEach(element => {
       Members.push(this.formBuilder.group({
         userId: element,

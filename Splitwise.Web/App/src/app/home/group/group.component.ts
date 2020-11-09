@@ -1,7 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { MemberDTO, SettlementDTO, ExpenseDTO, FriendDTO, MembersClient, GroupsClient, GroupDTO, SettlementsClient, UsersClient } from 'src/app/core/api/splitwiseAPI';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  MemberDTO,
+  SettlementDTO,
+  ExpenseDTO,
+  FriendDTO,
+  MembersClient,
+  GroupsClient,
+  GroupDTO,
+  SettlementsClient,
+  UsersClient,
+  ExpensesClient
+} from 'src/app/core/api/splitwiseAPI';
 import { UtilService } from 'src/app/core/util/util.service';
 
 @Component({
@@ -22,24 +33,38 @@ export class GroupComponent implements OnInit {
   activateMember: string;
   ShowMemberError: boolean;
   AddMemberError: any;
+  red = 'red';
+  green = 'green';
 
   constructor(
     private memberService: MembersClient,
     private groupService: GroupsClient,
     private settlementService: SettlementsClient,
+    private expenseService: ExpensesClient,
     private userService: UsersClient,
     private formBuilder: FormBuilder,
     private utilService: UtilService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    const userId = this.utilService.GetUserID();
-    const groupid = +this.route.snapshot.paramMap.get('groupId');
-    this.fetchGroup(groupid);
-    this.fetchMemberWithBalance(groupid);
-    this.fetchSettlement(groupid);
-    this.fetchfriends(userId);
+    this.route.params.subscribe(params => {
+      const userId = this.utilService.GetUserID();
+      const groupid = +this.route.snapshot.paramMap.get('groupId');
+      this.fetchGroup(groupid);
+      this.fetchMemberWithBalance(groupid);
+      this.fetchSettlement(groupid);
+      this.fetchfriends(userId);
+      this.fetchExpense(groupid);
+    });
+
+  }
+  fetchExpense(groupid: number) {
+    this.expenseService.getExpenseByGroupID(groupid).subscribe({
+      next: data => this.Expenses = data,
+      error: err => console.log(err)
+    });
   }
   fetchfriends(userId: string) {
     this.userService.getFriends(userId).subscribe({
@@ -105,6 +130,13 @@ export class GroupComponent implements OnInit {
       });
     }
   }
+  DeleteExpense(id: number) {
+    if (confirm('Are You Sure?')) {
+      this.expenseService.deleteExpense(id).subscribe({
+        complete: () => this.ngOnInit()
+      });
+    }
+  }
 
 
 
@@ -112,8 +144,9 @@ export class GroupComponent implements OnInit {
     this.activateSettlement = this.activateSettlement ? '' : 'activate';
   }
 
-  displayExpenseFrom(id?: number) {
-    this.activateExpense = this.activateExpense ? '' : 'activate';
+  RouteToExpenseFrom(id?: number) {
+    const groupId = this.route.snapshot.paramMap.get('groupId');
+    this.router.navigate(['/home/addexpense', groupId]);
   }
   displayMemberFrom() {
     this.activateMember = this.activateMember ? '' : 'activate';

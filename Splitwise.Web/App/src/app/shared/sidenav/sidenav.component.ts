@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FriendDTO, Group, GroupDTO, GroupsClient, UserDTO, UsersClient } from 'src/app/core/api/splitwiseAPI';
 import { UtilService } from 'src/app/core/util/util.service';
 
@@ -22,7 +23,8 @@ export class SidenavComponent implements OnInit {
     private userService: UsersClient,
     private groupService: GroupsClient,
     private utilService: UtilService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -77,5 +79,8 @@ export class SidenavComponent implements OnInit {
       error: err => this.errorMessage = err,
       complete: () => this.ngOnInit()
     });
+  }
+  RouteToGroup(id: number) {
+    this.router.navigate(['/home/group', id]);
   }
 }

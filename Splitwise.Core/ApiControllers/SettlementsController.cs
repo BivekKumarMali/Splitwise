@@ -83,7 +83,19 @@ namespace Splitwise.Core.ApiControllers
             return NotFound();
 
         }
+        [Route("Friend")]
+        [HttpGet]
+        public ActionResult<IEnumerable<SettlementDTO>> GetSettlementByFriend(string ufid)
+        {
+            var ids = ufid.Split(' ');
+            Friend friend = new Friend { Id = 0, UserId = ids[0], FriendId = ids[1] };
+            if (_userRepository.UserExist(friend.UserId) )
+            {
+                return Ok(_settlementRepository.SettlementByUserId(friend));
+            }
+            return NotFound();
 
+        }
 
         #endregion
     }
