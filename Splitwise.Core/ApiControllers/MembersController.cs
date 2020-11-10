@@ -40,12 +40,11 @@ namespace Splitwise.Core.ApiControllers
         {
             if (_groupRepository.GroupExist(groupid))
             {
-                return Ok(_memberRepository.AllMember(groupid));
+                return Ok(_memberRepository.AllMemberWithID(groupid));
             }
             return NotFound();
 
         }
-        
         //GET : api/Members
         [Route("Balance")]
         [HttpGet]

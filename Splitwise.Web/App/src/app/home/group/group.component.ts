@@ -28,6 +28,7 @@ export class GroupComponent implements OnInit {
   MemberWithBalance: MemberDTO[];
   Friends: FriendDTO[];
   Group: GroupDTO;
+  GroupId: number;
   activateSettlement: string;
   activateExpense: string;
   activateMember: string;
@@ -51,12 +52,12 @@ export class GroupComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const userId = this.utilService.GetUserID();
-      const groupid = +this.route.snapshot.paramMap.get('groupId');
-      this.fetchGroup(groupid);
-      this.fetchMemberWithBalance(groupid);
-      this.fetchSettlement(groupid);
+      this.GroupId = +this.route.snapshot.paramMap.get('groupId');
+      this.fetchGroup(this.GroupId);
+      this.fetchMemberWithBalance(this.GroupId);
+      this.fetchSettlement(this.GroupId);
       this.fetchfriends(userId);
-      this.fetchExpense(groupid);
+      this.fetchExpense(this.GroupId);
     });
 
   }

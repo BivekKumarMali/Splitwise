@@ -10,7 +10,7 @@ namespace Splitwise.Repository
     {
         void DeleteMember(int memberId);
         void AddMember(Member member);
-        IEnumerable<T> AllMember(int groupId);
+        IEnumerable<T> AllMemberWithID(int groupId);
         IEnumerable<T> AllMemberWithBalance(int groupId);
         bool memberExist(Member member);
         void AddMemberInBulk(Member[] member);

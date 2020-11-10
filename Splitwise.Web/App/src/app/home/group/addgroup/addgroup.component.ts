@@ -12,7 +12,7 @@ import { UtilService } from 'src/app/core/util/util.service';
 export class AddgroupComponent implements OnInit {
 
   Friends: FriendDTO[];
-  MemberUserId = [this.utilService.GetUserID()];
+  MemberUserId: string[] = [this.utilService.GetUserID()];
   userId: string[];
   ShowAddMembers = false;
 

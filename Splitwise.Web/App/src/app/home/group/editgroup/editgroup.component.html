@@ -6,7 +6,7 @@
           <h5>Edit Group</h5>
         </div>
         <div class="box-middle">
-          <form #groupForm="ngForm" (ngSubmit)="EditGroup()" ngNativeValidate>
+          <form #groupForm="ngForm" (ngSubmit)="EditGroup(groupForm)" ngNativeValidate>
             <div class="Addform ">
               <label for="name">Group Name :-</label>
               <input type="text" class="form-control" name="groupName" placeholder="Enter Group Name" id="name" required
@@ -15,7 +15,16 @@
             <h6>Members</h6>
             <div class="Addform" *ngFor="let item of Members">
               <span>{{item.name}}</span>
-              <i class="fa fa-trash delete"> Later</i>
+              <i class="fa fa-trash delete" (click)="DeleteMember(item.memberId)"></i>
+            </div>
+            <div class="buttonform">
+              <a class="btn btn-warning" (click)="SetupFriendsList()">Add Members</a>
+            </div>
+            <div class="Addfrom" *ngIf="ShowAddMembers">
+              <label *ngFor="let item of filterFriends; index as i;">
+                <input type="checkbox" [value]="item.id" name="userid" (change)="AddUserID($event, i)">{{item.name}}
+              </label>
+              <p *ngIf="filterFriends.length === 0">No Friend To add</p>
             </div>
             <div class="buttonform">
               <button type="submit" class="btn btn-primary">Edit</button>

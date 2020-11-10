@@ -23,7 +23,24 @@ namespace Splitwise.Repository
         #endregion
         #region Private Method
 
-        
+
+        private void DeleteMemberDetail(Member member)
+        {
+            var listExpenseToDelete = from ed in _dbContext.ExpenseDetails.ToList()
+                                      join e in _dbContext.Expenses.ToList()
+                                      on ed.ExpenseId equals e.Id
+                                      where e.GroupId == member.GroupId && ed.UserId == member.UserId
+                                      select e;
+            _dbContext.Expenses.RemoveRange(listExpenseToDelete);
+
+            var listOfSettlementToDelete = _dbContext.Settlements.Where(
+                                            x => x.GroupId == member.GroupId &&
+                                            (x.PayeeUserId == member.UserId || x.PayUserId == member.UserId))
+                                            .ToList();
+            _dbContext.Settlements.RemoveRange(listOfSettlementToDelete);
+        }
+
+
         #endregion
 
         #region Public Methods
@@ -31,6 +48,9 @@ namespace Splitwise.Repository
         public void DeleteMember(int memberId)
         {
             var member = _dbContext.Members.Find(memberId);
+
+            DeleteMemberDetail(member);
+
             _dbContext.Members.Remove(member);
             _dbContext.SaveChanges();
         }
@@ -98,7 +118,7 @@ namespace Splitwise.Repository
             return memberDTOs;
         }
         
-        public IEnumerable<MemberDTO> AllMember(int groupId)
+        public IEnumerable<MemberDTO> AllMemberWithID(int groupId)
         {
             var listOfSettlement = _dbContext.Settlements.Where(x => x.GroupId == groupId).ToList();
 
@@ -108,26 +128,20 @@ namespace Splitwise.Repository
                     where m.GroupId == groupId
                     select new MemberDTO
                     {
-                        Id = u.UserId,
+                        MemberId = m.Id,
                         Name = u.Name,
+                        Id = u.UserId,
                         Amount = 0
                     };
         }
 
         public bool memberExist(Member member)
         {
-            return _dbContext.Members.First(x => x.GroupId == member.GroupId && x.UserId == member.UserId) != null ? true : false;
+            return _dbContext.Members.FirstOrDefault(x => x.GroupId == member.GroupId && x.UserId == member.UserId) != null ? true : false;
         }
 
         public void AddMemberInBulk(Member[] member)
         {
-            foreach (var item in member)
-            {
-                if (!memberExist(item))
-                {
-                    member = member.Where(x => x != item).ToArray();
-                }
-            }
             if (member.Count() != 0)
             {
                 _dbContext.Members.AddRange(member);

@@ -36,7 +36,7 @@ export class AddexpenseComponent implements OnInit {
     this.fetchMember(groupId);
   }
   fetchMember(groupId: number) {
-    this.memberService.getMembers(groupId).subscribe({
+    this.memberService.getMemberWithBalance(groupId).subscribe({
       next: data => this.Members = data,
       error: err => console.log(err)
     });

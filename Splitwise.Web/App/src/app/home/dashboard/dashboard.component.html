@@ -8,12 +8,12 @@
         <div class="header">
           <div class="header-section">
             <h6>You Owe Amount</h6>
-            <p>{{AmountOwe}}</p>
+            <p>{{AmountOwed * -1}}</p>
           </div>
           <div class="vl"></div>
           <div class="header-section">
             <h6>You Are Owe Amount</h6>
-            <p>{{AmountOwed *-1}}</p>
+            <p>{{AmountOwe}}</p>
           </div>
           <div class="vl"></div>
           <div class="header-section">
@@ -25,7 +25,11 @@
         </div>
         <div class="friend" *ngFor="let item of filterFriends">
           <i class="fa fa-user fa-2x"></i>
-          <div class="friend-detail">
+          <div class="friend-detail" style="color: green;" *ngIf="item.amount < 0">
+            <span class="name">{{item.name}}</span>
+            <span class="amount"> {{item.amount *-1}} ₹</span>
+          </div>
+          <div class="friend-detail" style="color: red;" *ngIf="item.amount > 0">
             <span class="name">{{item.name}}</span>
             <span class="amount"> {{item.amount}} ₹</span>
           </div>
