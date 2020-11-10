@@ -11,8 +11,6 @@ namespace Splitwise.Repository.DTOs
         public string UserName { get; set; }
         public string TimeStamp { get; set; }
         public decimal Amount { get; set; }
-        // public long AmountPaid { get; set; }
-        //  public string AmountPaidBy { get; set; }
-        //  public string AmountOwedBy { get; set; }
+        public int GroupId { get; set; }
     }
 }

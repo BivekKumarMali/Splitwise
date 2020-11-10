@@ -52,6 +52,17 @@ namespace Splitwise.Web.Splitwise.Core.ApiControllers
             return NotFound();
 
         }
+        [Route("'ById")]
+        [HttpGet]
+        public ActionResult<ExpenseDTO> GetExpenseByID(long expenseid)
+        {
+            if (_expenseRepository.ExpenseExist(expenseid))
+            {
+                return Ok(_expenseRepository.ExpenseById(expenseid));
+            }
+            return NotFound();
+
+        }
 
 
         // GET : api/Expenses/userid

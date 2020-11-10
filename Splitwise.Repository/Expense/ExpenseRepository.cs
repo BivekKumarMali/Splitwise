@@ -109,6 +109,23 @@ namespace Splitwise.Repository
                        UserName = u.Name
                    };
         }
+
+        public ExpenseDTO ExpenseById(long expenseid)
+        {
+            var expense = _dbContext.Expenses.Find(expenseid);
+            var user = _dbContext.ApplicationUsers.Find(expense.UserId);
+            var expenseDetails = _dbContext.ExpenseDetails.Where(x => x.ExpenseId == expenseid).ToList();
+            var amount = expenseDetails.Sum(x => x.AmountPaid);
+            return new ExpenseDTO
+            {
+                Amount = amount,
+                ExpenseName = expense.ExpenseName,
+                Id = expense.Id,
+                GroupId = expense.GroupId,
+                UserName = user.Name,
+                TimeStamp = expense.TimeStamp.ToString()
+            };
+        }
         #endregion
     }
 }

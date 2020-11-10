@@ -1,0 +1,29 @@
+.box-middle {
+  background-color: white;
+  justify-content: center;
+  width: 100%;
+}
+form {
+  width: 350px;
+}
+.Addform {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.Addform label {
+  margin-left: 10%;
+  color: black;
+  font-size: 17px;
+  width: 100px;
+}
+
+.Addform .short {
+  width: 25%;
+}
+.Addform .medium {
+  width: 30%;
+}
+.note {
+  font-size: 8px;
+}

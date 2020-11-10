@@ -21,13 +21,16 @@
           </div>
           <i class="delete fa fa-trash fa-2x" (click)="DeleteSettlement(item.id)"></i>
         </div>
-        <div class="box-expense" *ngFor="let item of Expenses" [routerLink]="['/home/expense',item.id]">
-          <div class="dates">
-            <p class="month">Oct</p>
-            <p class="date">{{item.timeStamp}}</p>
-          </div>
-          <p class="name">{{item.expenseName}}</p>
-          <p class="name">Created By {{item.userName}}</p>
+        <div class="box-expense" *ngFor="let item of Expenses">
+          <span class="box-expense" [routerLink]="['/home/expense',item.id]">
+            <div class="dates">
+              <p class="month">Oct</p>
+              <p class="date">{{item.timeStamp}}</p>
+            </div>
+            <p class="name">{{item.expenseName}}</p>
+            <p class="name">Created By {{item.userName}}</p>
+          </span>
+          <i class="delete fa fa-edit fa-2x" [routerLink]="['/home/editexpense',item.id]"></i>
           <i class="delete fa fa-trash fa-2x" (click)="DeleteExpense(item.id)"></i>
         </div>
       </div>
