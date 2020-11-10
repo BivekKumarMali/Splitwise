@@ -188,9 +188,6 @@ namespace Splitwise.Repository
 
             }
 
-
-
-
             return List1.Concat(List2);
         }
         #endregion
