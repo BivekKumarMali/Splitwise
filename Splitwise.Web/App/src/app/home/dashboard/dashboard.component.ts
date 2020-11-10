@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FriendDTO, UsersClient } from 'src/app/core/api/splitwiseAPI';
+import { combineAll } from 'rxjs/operators';
+import { FriendDTO, SettlementDTO, SettlementsClient, UsersClient } from 'src/app/core/api/splitwiseAPI';
 import { UtilService } from 'src/app/core/util/util.service';
 
 @Component({
@@ -10,9 +11,15 @@ import { UtilService } from 'src/app/core/util/util.service';
 export class DashboardComponent implements OnInit {
 
   Friends: FriendDTO[];
+  filterFriends: FriendDTO[] = [];
+  Settlement: SettlementDTO[];
+  Balance = 0;
+  AmountOwe = 0;
+  AmountOwed = 0;
   constructor(
     private userService: UsersClient,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private settlementService: SettlementsClient
   ) { }
 
   ngOnInit(): void {
@@ -23,7 +30,31 @@ export class DashboardComponent implements OnInit {
     this.userService.getFriendWithBalance(id).subscribe({
       next: data => this.Friends = data,
       error: err => console.log(err),
+      complete: () => this.SetupDashboard(id)
     });
+  }
+  SetupDashboard(id: string): void {
+    this.Friends.forEach(element => {
+      if (element.amount > 0) {
+        this.AmountOwe += element.amount;
+        this.PushToFilter(element);
+      }
+      else if (element.amount < 0) {
+        this.AmountOwed += element.amount;
+        this.PushToFilter(element);
+      }
+      this.Balance += element.amount;
+    });
+  }
+  PushToFilter(element: FriendDTO) {
+    const elementIndex = this.filterFriends.findIndex(x => x.id === element.id);
+    if (elementIndex >= 0) {
+      this.filterFriends[elementIndex].amount += element.amount;
+    }
+    else {
+      this.filterFriends.push(element);
+    }
+
   }
 
 }

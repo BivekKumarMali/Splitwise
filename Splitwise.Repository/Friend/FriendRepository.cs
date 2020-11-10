@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,6 +114,7 @@ namespace Splitwise.Repository
                                        select new FriendDTO
                                        {
                                            Amount = oed.amount * -1,
+                                           Id = ed.UserId,
                                            Name = u.Name
                                        };
             var OwedExpenseDetail = from ed in _dbContext.ExpenseDetails.ToList()
@@ -135,9 +137,61 @@ namespace Splitwise.Repository
                                            Id = ed.UserId,
                                            Name = u.Name
                                        };
-            var list = ListOfPeopleToBePaid.Concat(ListOfPeopleToGetPaid).ToList();
-            IList<FriendDTO> finalList = new List<FriendDTO>();
-            return list;
+            var list1 = ListOfPeopleToBePaid.ToList();
+            var list2 = ListOfPeopleToGetPaid.ToList();
+            IList<FriendDTO> List1 = new List<FriendDTO>();
+            IList<FriendDTO> List2 = new List<FriendDTO>();
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                var element = list1[i];
+                for (int j = i; j < list1.Count; j++)
+                {
+                    var alreadyPresent = List1.Where(x => x.Id == element.Id).ToList();
+                    if(alreadyPresent.Count != 0)
+                    {
+                        element = null;
+                        break;
+                    }
+                    if(list1[j].Id == element.Id && i != j)
+                    {
+                        element.Amount += list1[j].Amount;
+                    }
+                    
+                }
+                if (element != null)
+                {
+                    List1.Add(element);
+                }
+
+            }for (int i = 0; i < list2.Count; i++)
+            {
+                var element = list2[i];
+                for (int j = i; j < list2.Count; j++)
+                {
+                    var alreadyPresent = List2.Where(x => x.Id == element.Id).ToList();
+                    if(alreadyPresent.Count != 0)
+                    {
+                        element = null;
+                        break;
+                    }
+                    if(list2[j].Id == element.Id && i != j)
+                    {
+                        element.Amount += list2[j].Amount;
+                    }
+                    
+                }
+                if (element != null)
+                {
+                    List2.Add(element);
+                }
+
+            }
+
+
+
+
+            return List1.Concat(List2);
         }
         #endregion
     }
