@@ -13,7 +13,6 @@ import { AddgroupComponent } from './group/addgroup/addgroup.component';
 import { EditgroupComponent } from './group/editgroup/editgroup.component';
 import { AddexpenseComponent } from './expense/addexpense/addexpense.component';
 import { ExpensedetailComponent } from './expense/expensedetail/expensedetail.component';
-import { EditexpenseComponent } from './expense/editexpense/editexpense.component';
 
 
 
@@ -28,8 +27,7 @@ import { EditexpenseComponent } from './expense/editexpense/editexpense.componen
     AddgroupComponent,
     EditgroupComponent,
     AddexpenseComponent,
-    ExpensedetailComponent,
-    EditexpenseComponent
+    ExpensedetailComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +41,6 @@ import { EditexpenseComponent } from './expense/editexpense/editexpense.componen
       { path: 'expense', component: ExpenseComponent },
       { path: 'expense/:expenseid', component: ExpensedetailComponent },
       { path: 'addexpense/:groupId', component: AddexpenseComponent },
-      { path: 'editexpense/:expenseid', component: EditexpenseComponent },
       { path: 'group/:groupId', component: GroupComponent },
       { path: 'addgroup', component: AddgroupComponent },
       { path: 'editgroup/:groupId', component: EditgroupComponent },

@@ -31,14 +31,19 @@ namespace Splitwise.Repository
         #region Public method
         public IEnumerable<GroupDTO> AllGroups(string userId)
         {
-            var listOfGroups = _dbContext.Groups.ToList().Where(x => x.UserId == userId);
-            var name = _dbContext.ApplicationUsers.Find(userId).Name;
-            return listOfGroups.Select(g => new GroupDTO
-            {
-                Id = g.Id,
-                GroupName = g.GroupName,
-                UserName = name
-            }).ToList();
+
+            return from g in _dbContext.Groups.ToList()
+                   join m in _dbContext.Members.ToList()
+                   on g.Id equals m.GroupId
+                   join u in _dbContext.ApplicationUsers.ToList()
+                   on m.UserId equals u.UserId
+                   where m.UserId == userId
+                   select new GroupDTO
+                   {
+                       Id = g.Id,
+                       GroupName = g.GroupName,
+                       UserName = u.Name
+                   };
 
         }
 

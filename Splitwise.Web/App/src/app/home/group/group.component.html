@@ -30,7 +30,6 @@
             <p class="name">{{item.expenseName}}</p>
             <p class="name">Created By {{item.userName}}</p>
           </span>
-          <i class="delete fa fa-edit fa-2x" [routerLink]="['/home/editexpense',item.id]"></i>
           <i class="delete fa fa-trash fa-2x" (click)="DeleteExpense(item.id)"></i>
         </div>
       </div>
